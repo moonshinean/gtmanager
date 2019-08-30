@@ -1,41 +1,33 @@
 /*分页按钮样式*/
+/*分页按钮样式*/
 .paging {
   position: absolute;
-  width: 80vw;
+  width: 100%;
   bottom: 5px;
-  text-align: center;
-  //left: 0;
-  cursor:pointer;
-  .pagination1{
+  left: 0;
+  >.pagination{
     margin: 0;
-    list-style: none;
-    li{
-      display: inline-block;
-      border-radius: 5px;
-      margin-bottom: 5vh;
-      margin-left: 1vw;
-      outline: none;
-      color: #fff;
-      border: 0;
-      background-color: #33353C;
-      line-height: 4vh;
-      a {
+    > li{
+       a {
+        background-color: #1A2128;
+        margin-right: 1vw;
         font-size: 0.875rem;
         color: white;
-        border: 1px solid #33353C;
+        cursor: pointer;
+        border: 1px solid #1A2128;
         input{
+          width: 5vw;
           color: white;
           background: transparent;
-          border: 1px solid rgba(255,255,235,0.5);
+          border: 1px solid rgba(125,233,235,0.1);
           border-radius: 3px;
         }
       }
       a:hover{
-        background-color: #33353C;
-        border: 1px solid #33353C;
+        background-color: #1A2128;
+        border: 1px solid #1A2128;
       }
     }
   }
 
 }
-

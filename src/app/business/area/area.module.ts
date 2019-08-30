@@ -6,6 +6,8 @@ import {AreaComponent} from './area/area.component';
 import {SLoationModule} from '../../common/components/s-loation/s-loation.module';
 import {ConfirmationService, ConfirmDialogModule, DialogModule, MessageModule, MessageService, MessagesModule} from 'primeng/primeng';
 import {PagingModule} from '../../common/components/paging/paging.module';
+import {BasicTableModule} from '../../common/components/basic-table/basic-table.module';
+import {PublicMethedService} from '../../common/tool/public-methed.service';
 
 
 
@@ -20,7 +22,8 @@ import {PagingModule} from '../../common/components/paging/paging.module';
     ConfirmDialogModule,
     PagingModule,
     DialogModule,
+    BasicTableModule,
   ],
-  providers: [MessageService, ConfirmationService, DatePipe]
+  providers: [MessageService, ConfirmationService, DatePipe, PublicMethedService]
 })
 export class AreaModule { }

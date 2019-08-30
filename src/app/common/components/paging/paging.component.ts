@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {PagingOption} from './paging.model';
+import {PublicMethedService} from '../../tool/public-methed.service';
 
 @Component({
   selector: 'rbi-paging',
@@ -11,7 +12,7 @@ export class PagingComponent implements OnInit, OnChanges {
   @Input() public option = new PagingOption();
   @Output() public pageClick = new EventEmitter<number>();
   public totalPage: number;
-  public nowPage : number;
+  public nowPage: number;
   public showPaging = true;
   public skpPage: number;
   constructor() { }
@@ -72,5 +73,8 @@ export class PagingComponent implements OnInit, OnChanges {
       this.nowPage = Number(this.skpPage);
       this.pageClick.emit(this.nowPage);
     }
+  }
+  public  din(e): void {
+      console.log(e);
   }
 }

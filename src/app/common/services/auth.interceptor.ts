@@ -43,7 +43,7 @@ export class AuthInterceptor implements HttpInterceptor {
         headers: req.headers
         .set('Content-type', 'application/json; charset=UTF-8')
         // .set('Content-type', 'application/x-www-form-urlencoded')
-        .set('appkey', this.localSessionStorage.get('appkey'))
+        // .set('appkey', this.localSessionStorage.get('appkey'))
       });
     }
     return next.handle(this.clonedRequest).pipe(

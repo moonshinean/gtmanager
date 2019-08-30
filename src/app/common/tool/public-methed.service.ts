@@ -100,7 +100,7 @@ export class PublicMethedService {
    * @param callback
    */
   public  setQuestJudgment(status, message, callback: (...args: any[]) => any): void {
-    if (status === '1000') {
+    if (status === 1000) {
       this.setToast('success', '操作成功', message);
       callback();
     } else {

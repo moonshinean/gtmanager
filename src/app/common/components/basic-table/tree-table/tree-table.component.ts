@@ -1,19 +1,19 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import { TableeBtn} from '../table.model';
+import {TableeBtn} from '../table.model';
 
 @Component({
-  selector: 'rbi-check-table-btn',
-  templateUrl: './check-table-btn.component.html',
-  styleUrls: ['./check-table-btn.component.less']
+  selector: 'rbi-tree-table',
+  templateUrl: './tree-table.component.html',
+  styleUrls: ['./tree-table.component.less']
 })
-export class CheckTableBtnComponent implements OnInit, OnChanges {
+export class TreeTableComponent implements OnInit, OnChanges {
+
   @Input()
-  public option: {
+  public treeTableOption: {
     width: any;
     header: any;
     Content: any;
     btnHidden?: any;
-    tableList?: TableeBtn[];
   };
   @Output()
   public detail = new EventEmitter<number>();
@@ -30,11 +30,13 @@ export class CheckTableBtnComponent implements OnInit, OnChanges {
     // if (this.option) {
     //   console.log(this.option);
     // }
+    console.log(this.treeTableOption);
+
   }
-  public  DetailClick(e): void {
-    // console.log(e);
-    this.detail.emit(e);
-  }
+  // public  DetailClick(e): void {
+  //   // console.log(e);
+  //   this.detail.emit(e);
+  // }
   // select Data
   public  selectClick(e): void {
     console.log(this.select);
@@ -42,10 +44,6 @@ export class CheckTableBtnComponent implements OnInit, OnChanges {
   }
   // cancel select data
   public  noSelectClick(e): void {
-    this.selectData.emit(this.select);
-  }
-
-  public  checkClick(): void {
     this.selectData.emit(this.select);
   }
 }
