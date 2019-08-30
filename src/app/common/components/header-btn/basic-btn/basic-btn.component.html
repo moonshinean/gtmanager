@@ -1,7 +1,7 @@
 <div class="basic-btn" *ngIf="btnOption">
   <div class=" ui-g-12">
     <div class="ui-g-1 basic-btn-header-btn basic-btn-header-basic-btn" [ngStyle]="item?.style" (click)="eventClick(item.label)" *ngFor="let item of btnOption.btnlist">
-      <img class="basic-btn-header-img" [src]="item?.src" alt="">
+      <!--<img class="basic-btn-header-img" [src]="item?.src" alt="">-->
       <span>{{item?.label}}</span>
     </div>
   </div>

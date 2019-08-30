@@ -30,7 +30,7 @@ export class TreeTableComponent implements OnInit, OnChanges {
     // if (this.option) {
     //   console.log(this.option);
     // }
-    console.log(this.treeTableOption);
+    // console.log(this.treeTableOption);
 
   }
   // public  DetailClick(e): void {

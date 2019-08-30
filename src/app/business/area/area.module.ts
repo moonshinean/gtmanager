@@ -8,6 +8,8 @@ import {ConfirmationService, ConfirmDialogModule, DialogModule, MessageModule, M
 import {PagingModule} from '../../common/components/paging/paging.module';
 import {BasicTableModule} from '../../common/components/basic-table/basic-table.module';
 import {PublicMethedService} from '../../common/tool/public-methed.service';
+import {HeaderBtnModule} from '../../common/components/header-btn/header-btn.module';
+import {BasicDialogModule} from '../../common/components/basic-dialog/basic-dialog.module';
 
 
 
@@ -23,6 +25,8 @@ import {PublicMethedService} from '../../common/tool/public-methed.service';
     PagingModule,
     DialogModule,
     BasicTableModule,
+    HeaderBtnModule,
+    BasicDialogModule
   ],
   providers: [MessageService, ConfirmationService, DatePipe, PublicMethedService]
 })

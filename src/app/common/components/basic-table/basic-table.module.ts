@@ -9,12 +9,18 @@ import {TreeTableModule} from 'primeng/primeng';
 
 
 @NgModule({
-  declarations: [BfTableComponent, CheckTableBtnComponent, TreeTableComponent],
+  declarations: [
+    BfTableComponent,
+    CheckTableBtnComponent,
+    TreeTableComponent],
   imports: [
     CommonModule,
     TableModule,
-    TreeTableModule
+    TreeTableModule,
   ],
-  exports: [BfTableComponent, CheckTableBtnComponent, TreeTableComponent]
+  exports: [
+    BfTableComponent,
+    CheckTableBtnComponent,
+    TreeTableComponent]
 })
 export class BasicTableModule { }

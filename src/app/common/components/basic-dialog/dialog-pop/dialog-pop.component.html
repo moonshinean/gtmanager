@@ -4,7 +4,7 @@
     <div class="ui-g ui-fluid" [ngStyle]="{'line-height':'3vh'}" *ngIf="dialogOption.type === 'add'">
       <div class="ui-g-12">
         <!--<rbi-form-control [formValue]="form" [formdata]="formdata"></rbi-form-control>-->
-        <div class="form-control" [formGroup]="formContrl" *ngIf="formdata">
+        <div class="form-group" [formGroup]="formContrl" *ngIf="formdata">
           <div class="ui-g-6" *ngFor="let item of formdata">
             <div class="ui-g-4">
               <label [for]="item?.name">{{item.label}}:</label>

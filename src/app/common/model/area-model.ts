@@ -1,26 +1,29 @@
 export class Area {
   data?: Data;
   children?: Area[];
+  parent?: Area;
 }
-/*export class AddTreeArea {
-  id?: number;
-  label?: string;
-  areaCode?: string;
-  level?: string;
-  enabled?: boolean;
-  parentId?: number;
-  children?: AddTreeArea[];
-  cityType?: string;
-  pids?: string;
-  status?: boolean;
-  parent?: AddTreeArea;
-  icon?: any;
-  expandedIcon?: any;
-  collapsedIcon?: any;
-  styleClass?: string;
-  draggable?: boolean;
-  droppable?: boolean;
-}*/
+export class AddArea {
+  areaCode?: any;
+  level?: any;
+  companyId?: any;
+  areaName?: any;
+}
+export class ModifyArea {
+  areaCode?: any;
+  areaLevel?: any;
+  companyId?: any;
+  areaName?: any;
+  companyPrvcId?: any;
+  provinceId?: any;
+
+}
+// export class deleteID {
+//   targetId?: any;
+//   level?: any;
+//   companyId?: any;
+//   areaName?: any;
+// }
 export class AddTree {
   id?: number;
   areaName?: string;
@@ -52,5 +55,6 @@ export class Data {
   areaCode: any;
   areaName: any;
   companyPrvcId: any;
+
 }
 

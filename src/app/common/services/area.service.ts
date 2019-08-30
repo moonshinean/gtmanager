@@ -16,4 +16,13 @@ export class AreaService {
   public  queryAreaDataPage(pamars): Observable<any> {
     return this.http.post('/AdministraionArea/paingQueryCMAInfo', pamars);
   }
+  public  addAreaData(pamars): Observable<any> {
+    return this.http.post('/AdministraionArea/insertManagerArea', pamars);
+  }
+  public  deleteAreaData(pamars): Observable<any> {
+    return this.http.post('/AdministraionArea/deleteManagerArea', pamars);
+  }
+  public  modifyAreaData(pamars): Observable<any> {
+    return this.http.post('/AdministraionArea/updataManagerArea', pamars);
+  }
 }

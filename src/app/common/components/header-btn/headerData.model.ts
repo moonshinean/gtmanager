@@ -4,6 +4,6 @@ export class BtnOption {
 }
 export class BtnList {
   label?: any;
-  src?: any;
+  // src?: any;
   style?: any;
 }
