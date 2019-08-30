@@ -137,6 +137,7 @@ export class AreaComponent implements OnInit {
           console.log(value);
           this.toolSrv.setQuestJudgment(value.status, value.message, () => {
             this.addDialogOption.dialog = false;
+            this.formgroup.reset();
             this.queryAreaDataPage(1);
           });
         }
@@ -220,6 +221,7 @@ export class AreaComponent implements OnInit {
             this.toolSrv.setQuestJudgment(value.status, value.message, () => {
               this.queryAreaDataPage(1);
               this.addDialogOption.dialog = false;
+              this.formgroup.reset();
               this.areaSelect = [];
             });
           }
