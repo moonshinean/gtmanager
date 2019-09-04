@@ -22,6 +22,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
   }
   public debug_http(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log(req.url);
     if (req.url ===  '/login') {
       this.clonedRequest = req.clone({
         url: environment.url + req.url,
@@ -38,6 +39,7 @@ export class AuthInterceptor implements HttpInterceptor {
         // .set('appkey', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJBUFAiLCJpc3MiOiJTZXJ2aWNlIiwiZXhwIjoxNTU5MDU1NDQ0LCJ1c2VySWQiOiIxNTU4NDkyMzY0NDMzNTUiLCJpYXQiOjE1NTkwMTIyNDR9.uF14iNrkqX61cIBVxSq7wJ-GUwQAOUvpTSWdXiB_MGY')
       });
     } else {
+      console.log(environment.url + req.url);
       this.clonedRequest = req.clone({
         url: environment.url + req.url,
         headers: req.headers

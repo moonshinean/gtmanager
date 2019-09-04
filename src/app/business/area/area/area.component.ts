@@ -131,7 +131,6 @@ export class AreaComponent implements OnInit {
   // add area request
   public  areaAddRequest(): void {
     this.toolSrv.setConfirmation('添加', '添加', () => {
-      console.log(123);
       this.areaSrv.addAreaData(this.addArea).subscribe(
         value => {
           console.log(value);
@@ -150,7 +149,6 @@ export class AreaComponent implements OnInit {
       this.toolSrv.setToast('error', '操作错误', '请选择需要删除的项');
 
     } else if (this.areaSelect.length === 1) {
-      console.log(this.areaSelect);
       this.toolSrv.setConfirmation('删除', '删除', () => {
         this.areaSrv.deleteAreaData({targetId: this.areaSelect[0].data.areaCode, areaLevel: this.areaSelect[0].data.areaLevel}).subscribe(
           value => {
@@ -234,6 +232,7 @@ export class AreaComponent implements OnInit {
       case '新增': this.areaAddDialogClick(); break;
       case '修改': this.areaModifyDialogClick(); break;
       case '删除': this.areaInfoDeleteClick(); break;
+      default: break;
       // case '上传': this.uploadFileClick(); break;
     }
   }

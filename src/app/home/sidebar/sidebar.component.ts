@@ -16,11 +16,11 @@ export class SidebarComponent implements OnInit {
       /* new NavListChild('数据采集', false, 'department/organization-management'),
        new NavListChild('部门管理', false, 'department/organization')*/
     ] , true),
-    new NavList('组织机构', '', 'fa fa-car', false, [
-      new NavListChild('公司管理', false, 'org/company', 'fa fa-snowflake-o'),
-      // new NavListChild('部门管理', false, 'org/department', 'fa fa-snowflake-o'),
-      // new NavListChild('职位管理', false, 'org/duty', 'fa fa-snowflake-o'),
-    ] , true),
+    // new NavList('组织机构', '', 'fa fa-car', false, [
+    //   new NavListChild('公司管理', false, 'org/company', 'fa fa-snowflake-o'),
+    //   // new NavListChild('部门管理', false, 'org/department', 'fa fa-snowflake-o'),
+    //   // new NavListChild('职位管理', false, 'org/duty', 'fa fa-snowflake-o'),
+    // ] , true),
     // new NavList('用户管理', 'user', 'fa fa-bar-chart', false, [
     //   /*new NavListChild('生产线', false, 'device/proline'),
     //   new NavListChild('模块数据', false, 'device/prolicm'),
@@ -33,11 +33,11 @@ export class SidebarComponent implements OnInit {
     //    new NavListChild('按钮管理', false, 'limit/button', 'fa fa-snowflake-o'),*/
     //   new NavListChild('路由权限', false, 'limit/route', 'fa fa-snowflake-o'),
     // ] , true),
-    // new NavList('服务区管理', '', 'fa fa-cog', false, [
-    //   new NavListChild('服务区', false, 'serarea/sernum', 'fa fa-snowflake-o'),
-    //   new NavListChild('服务区字段分类', false, 'serarea/types', 'fa fa-snowflake-o'),
-    //   new NavListChild('服务区字段', false, 'serarea/fields', 'fa fa-snowflake-o'),
-    // ] , true),
+    new NavList('服务区管理', 'serarea', 'fa fa-cog', false, [
+      // new NavListChild('服务区', false, 'serarea', 'fa fa-snowflake-o'),
+      // new NavListChild('服务区字段分类', false, 'serarea/types', 'fa fa-snowflake-o'),
+      // new NavListChild('服务区字段', false, 'serarea/fields', 'fa fa-snowflake-o'),
+    ] , true),
     // new NavList('门店管理', 'store', 'fa fa-address-card-o', false, [] , true),
     // new NavList('卡口管理', 'intercept', 'fa fa-desktop', false, [] , true),
     // new NavList('WIFI管理', 'wifi', 'fa fa-desktop', false, [] , true),

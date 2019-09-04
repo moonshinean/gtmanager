@@ -6,7 +6,6 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class AreaService {
-  public levelEnu = ['国家', '省份直辖市', '地级市'];
   constructor(
     private http: HttpClient
   ) {}

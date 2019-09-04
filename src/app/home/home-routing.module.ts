@@ -9,7 +9,8 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       {path: 'main' , loadChildren: () => import('../business/main/main.module').then(m => m.MainModule)},
-      {path: 'area', loadChildren: () => import('../business/area/area.module').then(m => m.AreaModule)}
+      {path: 'area', loadChildren: () => import('../business/area/area.module').then(m => m.AreaModule)},
+      {path: 'serarea', loadChildren: () => import('../business/serarea/serarea.module').then(m => m.SerareaModule)},
     ]
   }
 ];
