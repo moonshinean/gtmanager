@@ -35,7 +35,6 @@ export class SerareaComponent implements OnInit {
     this.serareaSrv.queryServiceAreaDataPage({currentPage: 1, pageSize: 10, companyId: environment.companyId}).subscribe(
       value => {
         this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-          console.log(value);
           this.setTableOption(value.paingQueryData.datas);
           this.serareaPageOption = {nowpage: value.paingQueryData.currentPage, row: value.paingQueryData.pageSize, total: value.paingQueryData.totalPage};
         });

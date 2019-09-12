@@ -3,22 +3,22 @@
   <div *ngIf="!option.btnHidden">
     <p-table [columns]="option.header" [value]="option.Content"  selectionMode="multiple"  scrollHeight="50vh"  [style]="{'width': option?.width}"  [(selection)]="select"   (onRowSelect)="selectClick($event)" (onRowUnselect)="noSelectClick($event)">
       <ng-template pTemplate="header" let-columns>
-        <tr style="height: 5vh;font-size: 1.8rem">
+        <tr style="height: 5vh">
           <!--<th style="width: 3em">-->
             <!--<p-tableHeaderCheckbox (click)="checkClick()"></p-tableHeaderCheckbox>-->
           <!--</th>-->
-          <th *ngFor="let col of columns">
+          <th *ngFor="let col of columns" >
             {{col.header}}
           </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
         <!--普通列表-->
-        <tr [pSelectableRow]="rowData">
+        <tr [pSelectableRow]="rowData" >
           <!--<td>-->
             <!--<p-tableCheckbox [value]="rowData"></p-tableCheckbox>-->
           <!--</td>-->
-          <td  *ngFor="let col of columns">
+          <td  *ngFor="let col of columns" >
             {{rowData[col.field]}}
           </td>
         </tr>
