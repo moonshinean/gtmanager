@@ -238,11 +238,13 @@ export class AreaComponent implements OnInit {
   }
 
   public  eventClick(e): void {
+    console.log(e);
     if (e === 'false') {
       this.addDialogOption.dialog = false;
       this.areaSelect = [];
     } else {
       if (e.invalid) {
+        console.log(e.type === '添加信息');
         if (e.type === '添加信息') {
           for (const eKey in e.value.value) {
             this.addArea[eKey] = e.value.value[eKey];
@@ -263,8 +265,8 @@ export class AreaComponent implements OnInit {
 
             }
           }
-          }
           this.areaModifyRequest();
+       }
       } else {
         this.toolSrv.setToast('error', '操作错误', '信息未填完整');
       }

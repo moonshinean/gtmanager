@@ -13,7 +13,7 @@ import {PagingOption} from '../../../common/components/paging/paging.model';
 export class SerareaComponent implements OnInit {
 
   public serareaPageOption: PagingOption = new PagingOption();
-  public serareaSelect: any;
+  public serareaSelect: any[] = [];
   public serareaTableOption: any;
   public btnOption: BtnOption = new BtnOption();
   constructor(
