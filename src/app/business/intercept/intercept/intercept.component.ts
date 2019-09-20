@@ -109,6 +109,9 @@ export class InterceptComponent implements OnInit {
             this.toolSrv.setQuestJudgment(value.status, value.message, () => {
               this.queryInterceptData(1);
               this.dialogOption.dialog = false;
+              this.interceptSelect = [];
+              this.formgroup.reset();
+              this.formdata = [];
             });
           }
         );
@@ -158,6 +161,9 @@ export class InterceptComponent implements OnInit {
           this.toolSrv.setQuestJudgment(value.status, value.message, () => {
             this.queryInterceptData(1);
             this.dialogOption.dialog = false;
+            this.formdata = [];
+            this.interceptSelect = [];
+            this.formgroup.reset();
           });
         }
       );
@@ -185,6 +191,7 @@ export class InterceptComponent implements OnInit {
          value => {
            this.toolSrv.setQuestJudgment(value.status, value.message, () => {
              this.queryInterceptData(1);
+             this.interceptSelect = [];
            });
          }
        );
@@ -208,6 +215,8 @@ export class InterceptComponent implements OnInit {
     console.log(e);
     if (e === 'false') {
       this.dialogOption.dialog = false;
+      this.formdata = [];
+      this.interceptSelect = [];
       // this.addDialogOption.dialog = false;
       // this.areaSelect = [];
     } else {

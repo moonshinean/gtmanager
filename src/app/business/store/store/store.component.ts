@@ -107,6 +107,8 @@ export class StoreComponent implements OnInit {
           this.toolSrv.setQuestJudgment(value.status, value.message, () => {
             this.querystoreData(1);
             this.dialogOption.dialog = false;
+            this.storeSelect = [];
+            this.formgroup.reset();
           });
         }
       );
@@ -147,6 +149,10 @@ export class StoreComponent implements OnInit {
           this.toolSrv.setQuestJudgment(value.status, value.message, () => {
             this.querystoreData(1);
             this.dialogOption.dialog = false;
+            this.storeSelect = [];
+            this.formgroup.reset();
+
+            // this.formdata = [];
           });
         }
       );
@@ -174,6 +180,7 @@ export class StoreComponent implements OnInit {
             this.toolSrv.setQuestJudgment(value.status, value.message, () => {
               this.querystoreData(1);
               // this.formgroup.reset();
+              this.storeSelect = [];
             });
           }
         );
@@ -201,7 +208,8 @@ export class StoreComponent implements OnInit {
     if (e === 'false') {
       this.dialogOption.dialog = false;
       // this.addDialogOption.dialog = false;
-      // this.areaSelect = [];
+      this.storeSelect = [];
+      this.formdata = [];
     } else {
       if (e.invalid) {
         console.log(e.type === '添加信息');
