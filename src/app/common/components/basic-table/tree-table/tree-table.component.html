@@ -18,7 +18,7 @@
   <!--</p-treeTable>-->
   <p-treeTable [value]="treeTableOption.Content" [columns]="treeTableOption.header" selectionMode="multiple" [(selection)]="select" (onNodeSelect)="selectClick($event)" (onNodeUnselect)="noSelectClick($event)">
     <ng-template pTemplate="header" let-columns>
-      <tr style="height: 5vh; font-size: 1.8rem">
+      <tr style="height: 5vh;">
         <th *ngFor="let col of columns">
           {{col.header}}
         </th>

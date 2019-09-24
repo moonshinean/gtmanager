@@ -34,9 +34,9 @@ export class SidebarComponent implements OnInit {
     //   new NavListChild('路由权限', false, 'limit/route', 'fa fa-snowflake-o'),
     // ] , true),
     new NavList('服务区管理', 'serarea', 'fa fa-cog', false, [
-      // new NavListChild('服务区', false, 'serarea', 'fa fa-snowflake-o'),
-      // new NavListChild('服务区字段分类', false, 'serarea/types', 'fa fa-snowflake-o'),
-      // new NavListChild('服务区字段', false, 'serarea/fields', 'fa fa-snowflake-o'),
+      new NavListChild('服务区', false, 'serarea/info', 'fa fa-snowflake-o'),
+      new NavListChild('服务区字段', false, 'serarea/field', 'fa fa-snowflake-o'),
+      new NavListChild('服务区字段类型', false, 'serarea/fieldType', 'fa fa-snowflake-o'),
     ] , true),
     new NavList('商铺管理', 'store', 'fa fa-address-card-o', false, [
       new NavListChild('店铺信息', false, 'store/storeInfo', 'fa fa-cc-stripe'),

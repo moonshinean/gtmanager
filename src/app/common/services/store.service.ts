@@ -26,4 +26,7 @@ export class StoreService {
   public  queryStoreConfiginfo(pamars): Observable<any> {
     return this.http.post('/config/common/getCompanyMngPrvcAreaServiceAreaTree', pamars);
   }
+    public  getStoreTypeinfo(pamars): Observable<any> {
+    return this.http.post('/StoreManager/getAllStoreType', pamars);
+  }
 }

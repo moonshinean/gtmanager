@@ -12,4 +12,15 @@ export class ModifyStore {
   manage?: any;
   manageTelephone?: any;
   serviceAreaId?: any;
+  storeId?: any;
+}
+
+
+export class AddStoreType {
+  storeTypeName?: any;
+}
+
+export class ModifyStoreType {
+  storeTypeName?: any;
+  storeTypeId?: any;
 }

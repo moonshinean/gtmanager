@@ -55,6 +55,7 @@ export class Data {
   areaCode: any;
   areaName: any;
   companyPrvcId: any;
+  provinceId?: any;
 
 }
 

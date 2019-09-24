@@ -6,13 +6,8 @@ export class DialogModel {
   dialog: boolean;
 }
 export class FromData {
-  label?: any; // 名字
-  type?: any;  // 类型
-  name?: any;  //
-  placeholder?: any; // 提示
-  option?: any; // 下拉框的列表
-  value?: any;  // 单选，多选的列表
-  disable?: any;  // 单选，多选的列表
+  formList: Form[];
+  dataList?: FieldList[];
 }
 export class FormValue {
   key: any;
@@ -51,4 +46,29 @@ export class FileOption {
   dialog?: boolean;
   files?: any;
   width?: any;
+}
+
+export class FieldList {
+  title: any;
+  data?: Field[];
+  drop?: Field[];
+}
+
+export class Field {
+  label?: any; // 名字
+  type?: any;  // 类型
+  name?: any;  //
+  placeholder?: any; // 提示
+  status?: any; // 提示
+  option?: any; // 提示
+  value?: any; // 提示
+}
+export  class Form {
+  label?: any; // 名字
+  type?: any;  // 类型
+  name?: any;  //
+  placeholder?: any; // 提示
+  option?: any; // 下拉框的列表
+  value?: any;  // 单选，多选的列表
+  disable?: any;  // 单选，多选的列表
 }

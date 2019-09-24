@@ -10,10 +10,12 @@ import {BasicTableModule} from '../../common/components/basic-table/basic-table.
 import {HeaderBtnModule} from '../../common/components/header-btn/header-btn.module';
 import {BasicDialogModule} from '../../common/components/basic-dialog/basic-dialog.module';
 import {PublicMethedService} from '../../common/tool/public-methed.service';
+import { SerareaFieldComponent } from './serarea-field/serarea-field.component';
+import { SerareaFieldTypeComponent } from './serarea-field-type/serarea-field-type.component';
 
 
 @NgModule({
-  declarations: [SerareaComponent],
+  declarations: [SerareaComponent, SerareaFieldComponent, SerareaFieldTypeComponent],
   imports: [
     CommonModule,
     SerareaRoutingModule,

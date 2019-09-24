@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   url: 'http://39.106.115.10:8080/expressway-administration',
+  // url: 'http://192.168.28.67:8080',
   companyId: 2
 };
 

@@ -16,6 +16,7 @@ import { UploadFileRecordComponent } from './upload-file-record/upload-file-reco
 import { ReviewPopComponent } from './review-pop/review-pop.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DialogPopComponent } from './dialog-pop/dialog-pop.component';
+import { ServicePopComponent } from './service-pop/service-pop.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,9 @@ import { DialogPopComponent } from './dialog-pop/dialog-pop.component';
     FilePopComponent,
     UploadFileRecordComponent,
     ReviewPopComponent,
-    DialogPopComponent],
+    DialogPopComponent,
+    ServicePopComponent
+  ],
   imports: [
     CommonModule,
     ScrollPanelModule,
@@ -45,7 +48,8 @@ import { DialogPopComponent } from './dialog-pop/dialog-pop.component';
     FilePopComponent,
     UploadFileRecordComponent,
     ReviewPopComponent,
-    DialogPopComponent
+    DialogPopComponent,
+    ServicePopComponent
   ]
 })
 export class BasicDialogModule { }

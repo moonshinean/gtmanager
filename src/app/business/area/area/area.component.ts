@@ -61,6 +61,7 @@ export class AreaComponent implements OnInit {
   public queryAreaDataPage(data): void {
     this.areaSrv.queryAreaDataPage({pageSize: 10, currentPage: data, companyId: environment.companyId}).subscribe(
       value => {
+        console.log(value);
         if (value.status === 1000) {
           this.setTableOption(this.tableTreeInitialize(value.paingQueryData.datas));
           this.pageOption = {nowpage: value.paingQueryData.currentPage, row: value.paingQueryData.pageSize, total: value.paingQueryData.totalPage};
@@ -149,16 +150,22 @@ export class AreaComponent implements OnInit {
       this.toolSrv.setToast('error', '操作错误', '请选择需要删除的项');
 
     } else if (this.areaSelect.length === 1) {
-      this.toolSrv.setConfirmation('删除', '删除', () => {
-        this.areaSrv.deleteAreaData({targetId: this.areaSelect[0].data.areaCode, areaLevel: this.areaSelect[0].data.areaLevel}).subscribe(
-          value => {
-            this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-              this.queryAreaDataPage(1);
-              this.areaSelect = [];
-            });
-          }
-        );
-      });
+      if (this.areaSelect[0].parent === null) {
+        this.toolSrv.setToast('error', '操作错误', '不能对省进行修改');
+
+      } else {
+        this.toolSrv.setConfirmation('删除', '删除', () => {
+          // console.log(this.areaSelect[0]);
+          this.areaSrv.deleteAreaData({targetId: this.areaSelect[0].data.areaCode, areaLevel: this.areaSelect[0].data.areaLevel}).subscribe(
+            value => {
+              this.toolSrv.setQuestJudgment(value.status, value.message, () => {
+                this.queryAreaDataPage(1);
+                this.areaSelect = [];
+              });
+            }
+          );
+        });
+      }
     } else {
       this.toolSrv.setToast('error', '操作错误', '只能选择一项进行删除');
     }
@@ -166,6 +173,7 @@ export class AreaComponent implements OnInit {
   }
   // modify area info
   public  areaModifyDialogClick(): void {
+    console.log(this.areaSelect);
     if (this.areaSelect.length === 0 ) {
       this.toolSrv.setToast('error', '操作错误', '请选择需要修改的项');
 
@@ -184,6 +192,11 @@ export class AreaComponent implements OnInit {
         list.forEach(val => {
           if (val === 'areaLevel') {
             this.form.push({key: val, disabled: false, required: false, value: 3});
+          } else if (val === 'companyPrvcId' ) {
+            console.log(this.areaSelect[0].parent.data);
+            this.form.push({key: val, disabled: false, required: false, value: this.areaSelect[0].parent.data.areaCode});
+          } else if (val === 'provinceId') {
+              this.form.push({key: val, disabled: false, required: false, value: this.areaSelect[0].parent.data[val]});
           } else {
             this.form.push({key: val, disabled: false, required: false, value: this.areaSelect[0].data[val]});
           }
@@ -280,17 +293,17 @@ export class AreaComponent implements OnInit {
       const datanode  = new Data();
        if (!data[i].hasOwnProperty('areaName')) {
          datanode.areaName  = data[i].provinceName;
+         datanode.provinceId = data[i].provinceId;
        } else {
          datanode.areaName  = data[i].areaName;
        }
        if (!data[i].hasOwnProperty('areaCode')) {
-         datanode.areaCode  = data[i].provinceId;
+         datanode.areaCode  = data[i].companyPrvcId;
        } else  {
          datanode.areaCode  = data[i].areaCode;
        }
       datanode.areaLevel = data[i].areaLevel;
       datanode.companyName = data[i].companyName;
-      datanode.companyPrvcId = data[i].companyPrvcId;
       datanode.companyLevel = data[i].companyLevel;
       datanode.companyId = data[i].companyId;
       datanode.idt = data[i].idt;
