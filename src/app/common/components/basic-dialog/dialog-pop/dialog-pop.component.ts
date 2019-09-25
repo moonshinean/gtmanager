@@ -68,6 +68,7 @@ export class DialogPopComponent implements OnInit, OnChanges {
   }
   // Confirm selected data
   public  dataTreeSureClick(): void {
+    console.log(this.dataTree);
     this.setData(this.dataTree);
     this.treeDialog = false;
     this.flag = 0;
@@ -77,7 +78,7 @@ export class DialogPopComponent implements OnInit, OnChanges {
     // if (this.treeData) {
     //   this.disable = true;
     // }
-    console.log(this.formContrl);
+    // console.log(this.formContrl);
   }
   // Tree structure initialization
   // public initializeTree(data): any {
@@ -104,13 +105,20 @@ export class DialogPopComponent implements OnInit, OnChanges {
       if (data[i].hasOwnProperty('companyName')) {
         childnode.value = data[i].companyId;
         childnode.label = data[i].companyName;
+        childnode.id = 1;
       } else if (data[i].hasOwnProperty('areaName')) {
         console.log(data[i].areaName);
         childnode.value = data[i].areaCode;
         childnode.label = data[i].areaName;
+        childnode.id = 2;
       } else if(data[i].hasOwnProperty('serviceAreaName')){
         childnode.value = data[i].serviceAreaId;
         childnode.label = data[i].serviceAreaName;
+        childnode.id = 3;
+      } else if (data[i].hasOwnProperty('storeName')) {
+        childnode.value = data[i].storeId;
+        childnode.label = data[i].storeName;
+        childnode.id = 4;
       }
       if (data[i].hasOwnProperty('companyMngPrvcTreeList')) {
         if (data[i].companyMngPrvcTreeList != null && data[i].companyMngPrvcTreeList.length !== 0 ) {
@@ -123,6 +131,10 @@ export class DialogPopComponent implements OnInit, OnChanges {
       } else  if (data[i].hasOwnProperty('serviceAreaBasisInfoList')) {
         if (data[i].serviceAreaBasisInfoList != null && data[i].serviceAreaBasisInfoList.length !== 0 ) {
           childnode.children = this.initializeTree(data[i].serviceAreaBasisInfoList);
+        }
+      } else if(data[i].hasOwnProperty('sysStoreList')){
+        if (data[i].sysStoreList != null && data[i].sysStoreList.length !== 0 ) {
+          childnode.children = this.initializeTree(data[i].sysStoreList);
         }
       } else {
         childnode.children = [];
@@ -166,8 +178,14 @@ export class DialogPopComponent implements OnInit, OnChanges {
   // }
   // Set the value in the acquired tree
   public setData(data): void {
-    this.formContrl.patchValue({serviceAreaId: data.value});
-    this.formContrl.patchValue({serviceAreaName: data.label});
+    if (data.id === 3) {
+      this.formContrl.patchValue({serviceAreaId: data.value});
+      this.formContrl.patchValue({serviceAreaName: data.label});
+    } else if (data.id === 4) {
+      this.formContrl.patchValue({storeId: data.value});
+      this.formContrl.patchValue({storeName: data.label});
+      this.formContrl.patchValue({serviceAreaId: data.parent.value});
+    }
   }
   // Input loses focus event
   public  inputBlur(e): void {
