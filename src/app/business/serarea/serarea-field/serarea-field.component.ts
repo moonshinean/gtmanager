@@ -128,7 +128,7 @@ export class SerareaFieldComponent implements OnInit {
     this.formdata = [
       {label: '字段类型', type: 'dropdown', name: 'fieldTypeId', option: this.fieldTypeOption, placeholder: '请选择字段类型名称'},
       {label: '字段名称', type: 'input', name: 'fieldName', option: this.fieldTypeOption, placeholder: '请输入字段名称'},
-      {label: '是否可删除状态', type: 'radio', name: 'status', option: '', placeholder: '', value: [{label: '是', name: 'status', value: 1, group: 'group'}, {label: '否', name: 'status', value: 2, group: 'group'}]},
+      {label: '是否可删除状态', type: 'radio', name: 'status', option: '', placeholder: '', value: [{label: '是', name: 'status', value: 2, group: 'group'}, {label: '否', name: 'status', value: 1, group: 'group'}]},
     ];
     // const list = ['storeName', 'orientation', 'storeTypeId', 'manage', 'manageTelephone'];
     // list.forEach(val => {
@@ -143,7 +143,7 @@ export class SerareaFieldComponent implements OnInit {
                 console.log(value);
                 this.toolSrv.setQuestJudgment(value.status, value.message, () => {
                     this.dialogOption.dialog = false;
-                    this.queryServiceAreaData(1);
+                    this.queryServiceAreaData(this.pageNo);
                     this.formdata = [];
                     this.formgroup.reset();
                  });
@@ -167,7 +167,7 @@ export class SerareaFieldComponent implements OnInit {
         // console.log(val);
         if (val === 'status') {
 
-          this.form.push({key: val, disabled: false, required: true, value: this.serareaFieldSelect[0].status === '可删' ? 1 :0});
+          this.form.push({key: val, disabled: false, required: true, value: this.serareaFieldSelect[0].status === '可删' ? 1 + 1 : 0 + 1});
         } else {
           this.form.push({key: val, disabled: false, required: true, value: this.serareaFieldSelect[0][val]});
 
@@ -177,7 +177,7 @@ export class SerareaFieldComponent implements OnInit {
       this.formdata = [
         {label: '字段类型', type: 'dropdown', name: 'fieldTypeId', option: this.fieldTypeOption, placeholder: '请选择字段类型名称'},
         {label: '字段名称', type: 'input', name: 'fieldName', option: this.fieldTypeOption, placeholder: '请输入字段名称'},
-        {label: '是否可删除状态', type: 'radio', name: 'status', option: '', placeholder: '', value: [{label: '是', name: 'status', value: 1, group: 'group'}, {label: '否', name: 'status', value: 0, group: 'group'}]},
+        {label: '是否可删除状态', type: 'radio', name: 'status', option: '', placeholder: '', value: [{label: '是', name: 'status', value: 2, group: 'group'}, {label: '否', name: 'status', value: 1, group: 'group'}]},
       ];
     } else  {
       this.toolSrv.setToast('error', '操作错误', '请选择一项进行修改');

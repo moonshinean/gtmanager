@@ -68,7 +68,6 @@ export class StoreComponent implements OnInit {
   public querystoreData(data): void {
     this.storeSrv.queryStoreDataPage({currentPage: data, pageSize: 10, companyId: environment.companyId}).subscribe(
       value => {
-        console.log(value);
         this.storeSelect = [];
         this.toolSrv.setQuestJudgment(value.status, value.message, () => {
           this.setTableOption(value.paingQueryData.datas);
@@ -80,6 +79,7 @@ export class StoreComponent implements OnInit {
   public  getStoreTypeInfo(): void {
     this.storeSrv.getStoreTypeinfo({}).subscribe(
       value => {
+        this.storeTypeOption = [];
         value.data.forEach( v => {
           this.storeTypeOption.push({label: v.storeTypeName, value: v.storeTypeId});
         });
