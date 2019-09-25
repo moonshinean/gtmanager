@@ -29,6 +29,7 @@ export class StoreComponent implements OnInit {
   public modifyStore: ModifyStore = new ModifyStore();
   public storeTypeOption = [];
   public companyTree: any;
+  public pageNo = 1;
   constructor(
     private storeSrv: StoreService,
     private toolSrv: PublicMethedService
@@ -40,9 +41,7 @@ export class StoreComponent implements OnInit {
       {label: '修改', style: {background: '#3A78DA', marginLeft: '1vw'} },
       {label: '删除', style: {background: '#A84847', marginLeft: '1vw'} },
     ];
-    this.querystoreData(1);
-    this.getstoreConfigInfo();
-    this.getStoreTypeInfo();
+    this.querystoreData(this.pageNo);
   }
   // select data （选择数据）
   public  selectData(e): void {
@@ -68,6 +67,7 @@ export class StoreComponent implements OnInit {
     this.storeSrv.queryStoreDataPage({currentPage: data, pageSize: 10, companyId: environment.companyId}).subscribe(
       value => {
         console.log(value);
+        this.storeSelect = [];
         this.toolSrv.setQuestJudgment(value.status, value.message, () => {
           this.setTableOption(value.paingQueryData.datas);
           this.pageOption = {nowpage: value.paingQueryData.currentPage, row: value.paingQueryData.pageSize, total: value.paingQueryData.totalPage};
@@ -75,7 +75,6 @@ export class StoreComponent implements OnInit {
       }
     );
   }
-
   public  getStoreTypeInfo(): void {
     this.storeSrv.getStoreTypeinfo({}).subscribe(
       value => {
@@ -86,19 +85,21 @@ export class StoreComponent implements OnInit {
     );
   }
   public  showAddDialog(): void {
+    this.getstoreConfigInfo();
+    this.getStoreTypeInfo();
     this.dialogOption = {
         type: 'add',
         title: '添加信息',
         width: '800',
         dialog: true
       };
-    const list = ['serviceAreaId', 'serviceAreaName', 'storeName', 'orientation', 'storeTypeId', 'manage', 'manageTelephone'];
+    const list = ['serviceAreaId', 'name', 'storeName', 'orientation', 'storeTypeId', 'manage', 'manageTelephone'];
     list.forEach(val => {
         this.form.push({key: val, disabled: false, required: true, value: ''});
     });
     this.formgroup = this.toolSrv.setFormGroup(this.form);
     this.formdata = [
-      {label: '片区名称', type: 'tree', name: 'serviceAreaName', option: '', placeholder: '请选择片区名称'},
+      {label: '服务区名称', type: 'tree', name: 'name', option: '', placeholder: '请选择片区名称'},
       {label: '店铺名称', type: 'input', name: 'storeName', option: '', placeholder: '请输入店铺名称'},
       {label: '方向', type: 'radio', name: 'orientation', option: '', placeholder: '', value: [{label: '上行', name: 'orientation', value: 1, group: 'group'}, {label: '下行', name: 'orientation', value: 2, group: 'group'}]},
       {label: '店铺类型', type: 'dropdown', name: 'storeTypeId', option: this.storeTypeOption, placeholder: '请选择店铺类型'},
@@ -113,7 +114,7 @@ export class StoreComponent implements OnInit {
         value => {
           console.log(value);
           this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-            this.querystoreData(1);
+            this.querystoreData(this.pageNo);
             this.dialogOption.dialog = false;
             this.storeSelect = [];
             this.formdata = [];
@@ -128,6 +129,8 @@ export class StoreComponent implements OnInit {
       if (this.storeSelect.length === 0 || this.storeSelect.length === undefined) {
         this.toolSrv.setToast('error', '操作错误', '请选择需要修改的项');
       } else if ( this.storeSelect.length === 1) {
+        this.getstoreConfigInfo();
+        this.getStoreTypeInfo();
         this.modifyStore.storeId = this.storeSelect[0].storeId;
         this.dialogOption = {
           type: 'add',
@@ -135,13 +138,13 @@ export class StoreComponent implements OnInit {
           width: '800',
           dialog: true
         };
-        const list = ['serviceAreaId', 'serviceAreaName', 'storeName', 'orientation', 'storeTypeId', 'manage', 'manageTelephone'];
+        const list = ['serviceAreaId', 'name', 'storeName', 'orientation', 'storeTypeId', 'manage', 'manageTelephone'];
         list.forEach(val => {
           this.form.push({key: val, disabled: false, required: true, value: this.storeSelect[0][val]});
         });
         this.formgroup = this.toolSrv.setFormGroup(this.form);
         this.formdata = [
-          {label: '片区名称', type: 'tree', name: 'serviceAreaName', option: '', placeholder: '请选择片区名称'},
+          {label: '服务区名称', type: 'tree', name: 'name', option: '', placeholder: '请选择片区名称'},
           {label: '店铺名称', type: 'input', name: 'storeName', option: this.companyOption, placeholder: '请选择店铺名称'},
           {label: '方向', type: 'radio', name: 'orientation', option: '', placeholder: '', value: [{label: '上行', name: 'orientation', value: 1, group: 'group'}, {label: '下行', name: 'orientation', value: 2, group: 'group'}]},
           {label: '店铺类型', type: 'dropdown', name: 'storeTypeId', option: this.storeTypeOption, placeholder: '请选择店铺类型'},
@@ -159,7 +162,7 @@ export class StoreComponent implements OnInit {
         value => {
           console.log(value);
           this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-            this.querystoreData(1);
+            this.querystoreData(this.pageNo);
             this.dialogOption.dialog = false;
             this.storeSelect = [];
             this.formdata = [];
@@ -183,7 +186,8 @@ export class StoreComponent implements OnInit {
   }
   // Pagination (分页)
   public  nowPageClick(e): void {
-    this.querystoreData(e);
+    this.pageNo = e;
+    this.querystoreData(this.pageNo );
   }
   // delete storeInfo (删除卡扣)
   public  deletestore(): void {
@@ -230,7 +234,7 @@ export class StoreComponent implements OnInit {
         if (e.type === '添加信息') {
           for (const eKey in e.value.value) {
             // this.addArea[eKey] = e.value.value[eKey];
-            if (eKey !== 'serviceAreaName') {
+            if (eKey !== 'name') {
               this.addStore[eKey] = e.value.value[eKey];
             }
           }
@@ -239,7 +243,7 @@ export class StoreComponent implements OnInit {
           // this.areaAddRequest();
         } else  {
           for (const eKey in e.value.value) {
-              if (eKey !== 'serviceAreaName') {
+              if (eKey !== 'name') {
                 this.modifyStore[eKey] = e.value.value[eKey];
               }
           }

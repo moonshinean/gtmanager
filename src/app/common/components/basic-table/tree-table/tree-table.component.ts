@@ -39,7 +39,6 @@ export class TreeTableComponent implements OnInit, OnChanges {
   // }
   // select Data
   public  selectClick(e): void {
-    console.log(this.select);
     this.selectData.emit(this.select);
   }
   // cancel select data

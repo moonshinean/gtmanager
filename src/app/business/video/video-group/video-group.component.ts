@@ -25,8 +25,6 @@ export class VideoGroupComponent implements OnInit {
   public formgroup: FormGroup;
   public dialogOption: any;
   public formdata: any[];
-  public companyOption: any[] = [];
-  public videoGroupTypeOption = [];
   public companyTree: any;
   public modifyVideoGroup: ModifyVideoGroup = new ModifyVideoGroup();
   public addVideoGroup: AddVideoGroup = new AddVideoGroup();
@@ -68,6 +66,7 @@ export class VideoGroupComponent implements OnInit {
       value => {
         console.log(value);
         this.toolSrv.setQuestJudgment(value.status, value.message, () => {
+          this.videoGroupSelect = [];
           this.setTableOption(value.paingQueryData.datas);
           this.pageOption = {nowpage: value.paingQueryData.currentPage, row: value.paingQueryData.pageSize, total: value.paingQueryData.totalPage};
         });
@@ -162,7 +161,6 @@ export class VideoGroupComponent implements OnInit {
   // Pagination (分页)
   public  nowPageClick(e): void {
     this.pageNo = e;
-    this.videoGroupSelect = [];
     this.queryvideoGroupData(this.pageNo);
   }
   // delete videoGroupInfo (删除卡扣)

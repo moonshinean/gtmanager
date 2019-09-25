@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AreaService} from '../../../common/services/area.service';
 import {environment} from '../../../../environments/environment';
 import {PublicMethedService} from '../../../common/tool/public-methed.service';
-import {AddArea, Area, Data, ModifyArea} from '../../../common/model/area-model';
+import {AddArea, Area, Data, ExpandedData, ModifyArea} from '../../../common/model/area-model';
 import {PagingOption} from '../../../common/components/paging/paging.model';
 import {BtnOption} from '../../../common/components/header-btn/headerData.model';
 import {FormValue} from '../../../common/components/basic-dialog/dialog.model';
@@ -30,6 +30,7 @@ export class AreaComponent implements OnInit {
   public form: FormValue[] = [];
   public formgroup: FormGroup;
 
+  public expandedData: ExpandedData = new ExpandedData();
 
   constructor(
     private areaSrv: AreaService,
@@ -55,7 +56,15 @@ export class AreaComponent implements OnInit {
   // select table  data
   public selectData(e): void {
     this.areaSelect = e;
-    console.log(e.parent);
+    if (e.length !== 0) {
+      if (e[0].parent !== null) {
+        this.expandedData.id = e[0].parent.id;
+        this.expandedData.type = '2';
+      } else {
+        this.expandedData.id = e[0].id;
+        this.expandedData.type = '2';
+      }
+    }
   }
   // query area data page
   public queryAreaDataPage(data): void {
@@ -131,6 +140,8 @@ export class AreaComponent implements OnInit {
   }
   // add area request
   public  areaAddRequest(): void {
+    this.expandedData.id = this.addArea.areaCode;
+    this.expandedData.type = '1';
     this.toolSrv.setConfirmation('添加', '添加', () => {
       this.areaSrv.addAreaData(this.addArea).subscribe(
         value => {
@@ -257,7 +268,6 @@ export class AreaComponent implements OnInit {
       this.areaSelect = [];
     } else {
       if (e.invalid) {
-        console.log(e.type === '添加信息');
         if (e.type === '添加信息') {
           for (const eKey in e.value.value) {
             this.addArea[eKey] = e.value.value[eKey];
@@ -294,6 +304,7 @@ export class AreaComponent implements OnInit {
        if (!data[i].hasOwnProperty('areaName')) {
          datanode.areaName  = data[i].provinceName;
          datanode.provinceId = data[i].provinceId;
+
        } else {
          datanode.areaName  = data[i].areaName;
        }
@@ -309,6 +320,20 @@ export class AreaComponent implements OnInit {
       datanode.idt = data[i].idt;
       childnode.data = datanode;
       childnode.parent = null;
+      childnode.id = i;
+      if (this.expandedData.type === '2') {
+         if (this.expandedData.id === i) {
+           childnode.expanded = true;
+         } else {
+           childnode.expanded = false;
+         }
+      } else {
+        if (this.expandedData.id === childnode.data.provinceId) {
+          childnode.expanded = true;
+        } else {
+          childnode.expanded = false;
+        }
+      }
       if (data[i].companyAreaInfoList === undefined) {
         childnode.children = [];
       } else {

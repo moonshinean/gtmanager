@@ -27,7 +27,7 @@ export class StoreTypeComponent implements OnInit {
   public formdata: any[];
   public addStoreType: AddStoreType = new AddStoreType();
   public modifyStoreType: ModifyStoreType = new ModifyStoreType();
-
+  public pageNo = 1;
   constructor(
     private storeTypeSrv: StoreTypeService,
     private toolSrv: PublicMethedService
@@ -39,7 +39,7 @@ export class StoreTypeComponent implements OnInit {
       {label: '修改', style: {background: '#3A78DA', marginLeft: '1vw'} },
       {label: '删除', style: {background: '#A84847', marginLeft: '1vw'} },
     ];
-    this.querystoreTypeData(1);
+    this.querystoreTypeData(this.pageNo);
   }
   // select data （选择数据）
   public  selectData(e): void {
@@ -65,6 +65,7 @@ export class StoreTypeComponent implements OnInit {
       value => {
         console.log(value);
         this.toolSrv.setQuestJudgment(value.status, value.message, () => {
+          this.storeTypeSelect = [];
           value.paingQueryData.datas.forEach( v => {
             v.enabled = (v.enabled === 1) ? '启用' : '禁用';
           });
@@ -98,7 +99,7 @@ export class StoreTypeComponent implements OnInit {
         value => {
           console.log(value);
           this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-            this.querystoreTypeData(1);
+            this.querystoreTypeData(this.pageNo);
             this.dialogOption.dialog = false;
           });
         }
@@ -136,7 +137,7 @@ export class StoreTypeComponent implements OnInit {
         value => {
           console.log(value);
           this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-            this.querystoreTypeData(1);
+            this.querystoreTypeData(this.pageNo);
             this.dialogOption.dialog = false;
             this.storeTypeSelect = [];
             this.formdata = [];
@@ -157,7 +158,8 @@ export class StoreTypeComponent implements OnInit {
   }
   // Pagination (分页)
   public  nowPageClick(e): void {
-    this.querystoreTypeData(e);
+    this.pageNo = e;
+    this.querystoreTypeData(this.pageNo);
   }
   // delete interceot (删除卡扣)
   public  deletestoreType(): void {
@@ -166,7 +168,7 @@ export class StoreTypeComponent implements OnInit {
        this.storeTypeSrv.deleteStoreType({storeTypeId: this.storeTypeSelect[0].storeTypeId}).subscribe(
          value => {
            this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-             this.querystoreTypeData(1);
+             this.querystoreTypeData(this.pageNo);
            });
          }
        );

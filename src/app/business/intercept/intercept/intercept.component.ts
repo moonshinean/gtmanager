@@ -87,14 +87,14 @@ export class InterceptComponent implements OnInit {
         width: '800',
         dialog: true
       };
-    const list = ['bayonetCode', 'serviceAreaName', 'serviceAreaId', 'orientation', 'bayonetName', 'bayonetType'];
+    const list = ['bayonetCode', 'name', 'serviceAreaId', 'orientation', 'bayonetName', 'bayonetType'];
     list.forEach(val => {
       this.form.push({key: val, disabled: false, required: true, value: ''});
     });
     this.formgroup = this.toolSrv.setFormGroup(this.form);
     this.formdata = [
       {label: '卡口标识', type: 'input', name: 'bayonetCode', option: '', placeholder: '请输入卡口标识'},
-      {label: '服务区名称', type: 'tree', name: 'serviceAreaName', option: '', placeholder: '请选择服务区'},
+      {label: '服务区名称', type: 'tree', name: 'name', option: '', placeholder: '请选择服务区'},
       {label: '方向', type: 'radio', name: 'orientation', option: '', placeholder: '', value: [{label: '上行', name: 'orientation', value: 1, group: 'group'}, {label: '下行', name: 'orientation', value: 2, group: 'group'}]},
       {label: '卡口名称', type: 'input', name: 'bayonetName', option: '' , placeholder: '请输入卡扣名称'},
       {label: '卡扣类型', type: 'radio', name: 'bayonetType', option: '', placeholder: '', value: [{label: '进口', name: 'bayonetType', value: 1, group: 'group1'}, {label: '出口', name: 'bayonetType', value: 2, group: 'group1'}]},
@@ -129,7 +129,7 @@ export class InterceptComponent implements OnInit {
         width: '800',
         dialog: true
       };
-      const list = ['bayonetCode', 'serviceAreaName', 'serviceAreaId', 'orientation', 'bayonetName', 'bayonetType'];
+      const list = ['bayonetCode', 'name', 'serviceAreaId', 'orientation', 'bayonetName', 'bayonetType'];
       list.forEach(val => {
         if (val === 'orientation'){
           this.form.push({key: val, disabled: false, required: true, value: (this.interceptSelect[0][val] === '上行') ? 1 : 2 });
@@ -142,7 +142,7 @@ export class InterceptComponent implements OnInit {
       this.formgroup = this.toolSrv.setFormGroup(this.form);
       this.formdata = [
         {label: '卡口标识', type: 'input', name: 'bayonetCode', option: '', placeholder: '请输入卡口标识'},
-        {label: '服务区名称', type: 'tree', name: 'serviceAreaName', option: '', placeholder: '请选择服务区'},
+        {label: '服务区名称', type: 'tree', name: 'name', option: '', placeholder: '请选择服务区'},
         {label: '方向', type: 'radio', name: 'orientation', option: '', placeholder: '', value: [{label: '上行', name: 'orientation', value: 1, group: 'group'}, {label: '下行', name: 'orientation', value: 2, group: 'group'}]},
         {label: '卡口名称', type: 'input', name: 'bayonetName', option: '' , placeholder: '请输入卡扣名称'},
         {label: '卡扣类型', type: 'radio', name: 'bayonetType', option: '', placeholder: '', value: [{label: '进口', name: 'bayonetType', value: 1, group: 'group1'}, {label: '出口', name: 'bayonetType', value: 2, group: 'group1'}]},
@@ -223,7 +223,7 @@ export class InterceptComponent implements OnInit {
       if (e.invalid) {
         if (e.type === '添加信息') {
           for (const eKey in e.value.value) {
-            if (eKey !== 'serviceAreaName'){
+            if (eKey !== 'name'){
               this.addIntercept[eKey] = e.value.value[eKey];
             }
           }
@@ -232,7 +232,9 @@ export class InterceptComponent implements OnInit {
           this.addInterceptRequest(this.addIntercept);
         } else  {
           for (const eKey in e.value.value) {
+            if (eKey !== 'name') {
               this.modifyIntercept[eKey] = e.value.value[eKey];
+            }
           }
           this.modifyInterceptRequest(this.modifyIntercept);
         }

@@ -33,18 +33,18 @@ export class SidebarComponent implements OnInit {
     //    new NavListChild('按钮管理', false, 'limit/button', 'fa fa-snowflake-o'),*/
     //   new NavListChild('路由权限', false, 'limit/route', 'fa fa-snowflake-o'),
     // ] , true),
-    new NavList('服务区管理', 'serarea', 'fa fa-cog', false, [
+    new NavList('服务区管理', 'serarea/info', 'fa fa-cog', false, [
       new NavListChild('服务区', false, 'serarea/info', 'fa fa-snowflake-o'),
       new NavListChild('服务区字段', false, 'serarea/field', 'fa fa-snowflake-o'),
       new NavListChild('服务区字段类型', false, 'serarea/fieldType', 'fa fa-snowflake-o'),
     ] , true),
-    new NavList('商铺管理', 'store', 'fa fa-address-card-o', false, [
+    new NavList('商铺管理', 'store/storeInfo', 'fa fa-address-card-o', false, [
       new NavListChild('店铺信息', false, 'store/storeInfo', 'fa fa-cc-stripe'),
       new NavListChild('店铺类型', false, 'store/storeType', 'fa fa-meanpath'),
     ] , true),
     new NavList('卡口管理', 'intercept', 'fa fa-desktop', false, [] , true),
     // new NavList('WIFI管理', 'wifi', 'fa fa-desktop', false, [] , true),
-    new NavList('视频管理', 'video', 'fa fa-cog', false, [
+    new NavList('视频管理', 'video/video', 'fa fa-cog', false, [
       new NavListChild('视频信息', false, 'video/video', 'fa fa-desktop'),
       new NavListChild('视频组信息', false, 'video/video-group', 'fa fa-desktop'),
     ] , true),
@@ -86,15 +86,53 @@ export class SidebarComponent implements OnInit {
       for (let i = 0; i < mainul.children.length; i++) {
         mainul.children[i].children[1].style.height = '0px';
       }
+      console.log(list);
       this.navLists.forEach((item) => {
+
         item.open = true;
         item.clsstate = false;
-        item.children.forEach((itemchild) => {
-          itemchild.setState = false;
-        });
+        if (item.children.length > 0) {
+          item.children.forEach((itemchild) => {
+              itemchild.setState = false;
+          });
+        }
       });
       list.clsstate = true;
+      // if (list.children.length > 0) {
+      //   list.children.forEach( (v, index) => {
+      //      if (index === 0) {
+      //        v.setState = true;
+      //      } else {
+      //        v.setState = false;
+      //      }
+      //   });
+      // }else {
+      //   list.setState = true;
+      // }
       return;
+    } else {
+      for (let i = 0; i < mainul.children.length; i++) {
+        mainul.children[i].children[1].style.height = '0px';
+      }
+      console.log(list);
+      this.navLists.forEach((item) => {
+
+        item.open = true;
+        item.clsstate = false;
+        if (item.children.length > 0) {
+          item.children.forEach((itemchild) => {
+            itemchild.setState = false;
+          });
+        }
+      });
+      list.children.forEach( (v, index) => {
+           if (index === 0) {
+             v.setState = true;
+           } else {
+             v.setState = false;
+           }
+        });
+      list.clsstate = false;
     }
     if (element.offsetHeight === 0) {
       this.navLists.forEach((item) => {

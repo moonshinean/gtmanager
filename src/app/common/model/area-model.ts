@@ -2,6 +2,8 @@ export class Area {
   data?: Data;
   children?: Area[];
   parent?: Area;
+  expanded?: boolean;
+  id?: any;
 }
 export class AddArea {
   areaCode?: any;
@@ -17,6 +19,10 @@ export class ModifyArea {
   companyPrvcId?: any;
   provinceId?: any;
 
+}
+export class ExpandedData {
+  id?: any;
+  type?: any;
 }
 // export class deleteID {
 //   targetId?: any;

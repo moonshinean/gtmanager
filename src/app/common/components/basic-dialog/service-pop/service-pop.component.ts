@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {DataTree, DialogModel, FromData} from '../dialog.model';
 import {FormGroup} from '@angular/forms';
 import {TreeNode} from '../../../model/shared-model';
+import {PublicMethedService} from '../../../tool/public-methed.service';
 
 @Component({
   selector: 'rbi-service-pop',
@@ -42,7 +43,9 @@ export class ServicePopComponent implements OnInit, OnChanges {
     today: '今天',
     clear: '清除'
   };
-  constructor() { }
+  constructor(
+    private toolSrv: PublicMethedService
+  ) { }
 
   ngOnInit() {
     // this.dialog = false;
@@ -109,13 +112,23 @@ export class ServicePopComponent implements OnInit, OnChanges {
       if (data[i].hasOwnProperty('companyName')) {
         childnode.value = data[i].companyId;
         childnode.label = data[i].companyName;
+        childnode.selectable = false;
       } else if (data[i].hasOwnProperty('areaName')) {
-        console.log(data[i].areaName);
-        childnode.value = data[i].areaCode;
-        childnode.label = data[i].areaName;
+        if (data[i].hasOwnProperty('companyId')){
+          console.log(data[i].areaName);
+          childnode.value = data[i].areaCode;
+          childnode.label = data[i].areaName;
+          childnode.selectable = false;
+        } else {
+          console.log(data[i].areaName);
+          childnode.value = data[i].areaCode;
+          childnode.label = data[i].areaName;
+          childnode.selectable = true;
+        }
       } else if (data[i].hasOwnProperty('serviceAreaName')) {
         childnode.value = data[i].serviceAreaId;
         childnode.label = data[i].serviceAreaName;
+        // childnode.selectable = true;
       }
       if (data[i].hasOwnProperty('companyMngPrvcTreeList')) {
         if (data[i].companyMngPrvcTreeList != null && data[i].companyMngPrvcTreeList.length !== 0 ) {
@@ -138,8 +151,8 @@ export class ServicePopComponent implements OnInit, OnChanges {
   }
   // Set the value in the acquired tree
   public setData(data): void {
-    this.formContrl.patchValue({areaCode: data.value});
-    this.formContrl.patchValue({areaName: data.label});
+      this.formContrl.patchValue({areaCode: data.value});
+      this.formContrl.patchValue({areaName: data.label});
   }
   // Input loses focus event
   public  inputBlur(e): void {

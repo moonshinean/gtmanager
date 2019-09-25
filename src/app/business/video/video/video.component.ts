@@ -31,6 +31,8 @@ export class VideoComponent implements OnInit {
   public companyTree: any;
   public videoGroupOption = [];
   public ids = [];
+
+  public pageNo = 1;
   constructor(
     private videoSrv: VideoService,
     private toolSrv: PublicMethedService
@@ -42,7 +44,7 @@ export class VideoComponent implements OnInit {
       {label: '修改', style: {background: '#3A78DA', marginLeft: '1vw'} },
       {label: '删除', style: {background: '#A84847', marginLeft: '1vw'} },
     ];
-    this.queryvideoData(1);
+    this.queryvideoData(this.pageNo);
     this.getvideoConfigInfo();
 
     // this.getvideoTypeInfo();
@@ -73,8 +75,8 @@ export class VideoComponent implements OnInit {
   public queryvideoData(data): void {
     this.videoSrv.queryVideoDataPage({currentPage: data, pageSize: 10, companyId: environment.companyId}).subscribe(
       value => {
-        console.log(value);
         this.toolSrv.setQuestJudgment(value.status, value.message, () => {
+          this.videoSelect = [];
           this.setTableOption(value.paingQueryData.datas);
           this.pageOption = {nowpage: value.paingQueryData.currentPage, row: value.paingQueryData.pageSize, total: value.paingQueryData.totalPage};
         });
@@ -120,18 +122,21 @@ export class VideoComponent implements OnInit {
     this.dialogOption = {
       type: 'add',
       title: '添加信息',
-      width: '800',
+      width: '900',
       dialog: true
     };
-    const list = ['cameraName', 'serviceAreaId', 'orientation', 'storeId', 'storeName', 'isInStore',
+    const list = ['cameraName',  'serviceAreaId', 'orientation', 'storeId', 'name', 'isInStore',
       'groupId', 'cameraType', 'videoUrl', 'outUrl', 'innerUrl'];
     list.forEach(val => {
-      this.form.push({key: val, disabled: false, required: true, value: ''});
+      if (val === 'isInStore' ||  val === 'orientation' || val === 'cameraType') {
+        this.form.push({key: val, disabled: false, required: true, value: 1});
+      }else {
+        this.form.push({key: val, disabled: false, required: true, value: ''});
+      }
     });
     this.formgroup = this.toolSrv.setFormGroup(this.form);
     this.formdata = [
-      {label: '店铺名称', type: 'tree', name: 'storeName', option: '', placeholder: '请选择片区名称'},
-      // {label: '店铺名称', type: 'input', name: 'videoName', option: this.companyOption, placeholder: '请选择店铺名称'},
+      {label: '服务区/店铺名称', type: 'tree', name: 'name', option: '', placeholder: '请选择片区名称'},
       {label: '视频头名称', type: 'input', name: 'cameraName', option: '', placeholder: '请输入视频组名称'},
       {label: '方向', type: 'radio', name: 'orientation', option: '', placeholder: '', value: [{label: '上行', name: 'orientation', value: 1, group: 'group'}, {label: '下行', name: 'orientation', value: 2, group: 'group'}]},
       {label: '是否在店铺内', type: 'radio', name: 'isInStore', option: '', placeholder: '', value: [{label: '是', name: 'isInStore', value: 1, group: 'group1'}, {label: '否', name: 'isInStore', value: 2, group: 'group1'}]},
@@ -149,7 +154,7 @@ export class VideoComponent implements OnInit {
         value => {
           console.log(value);
           this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-            this.queryvideoData(1);
+            this.queryvideoData(this.pageNo);
             this.dialogOption.dialog = false;
             this.videoSelect = [];
             this.formdata = [];
@@ -168,17 +173,26 @@ export class VideoComponent implements OnInit {
       this.dialogOption = {
         type: 'add',
         title: '修改信息',
-        width: '800',
+        width: '900',
         dialog: true
       };
-      const list = ['cameraName', 'serviceAreaId', 'orientation', 'storeId', 'storeName', 'isInStore',
+      const list = ['cameraName', 'name', 'serviceAreaId', 'orientation', 'storeId', 'isInStore',
         'groupId', 'cameraType', 'videoUrl', 'outUrl', 'innerUrl'];
       list.forEach(val => {
-        this.form.push({key: val, disabled: false, required: true, value: this.videoSelect[0][val]});
+        if (val === 'name') {
+          if (this.videoSelect[0].storeName) {
+            this.form.push({key: val, disabled: false, required: false, value: this.videoSelect[0].storeName});
+          } else {
+            this.form.push({key: val, disabled: false, required: false, value: this.videoSelect[0].serviceAreaName});
+          }
+        } else {
+          this.form.push({key: val, disabled: false, required: false, value: this.videoSelect[0][val]});
+        }
       });
       this.formgroup = this.toolSrv.setFormGroup(this.form);
       this.formdata = [
-        {label: '店铺名称', type: 'tree', name: 'storeName', option: '', placeholder: '请选择片区名称'},
+        {label: '服务区/店铺名称', type: 'tree', name: 'name', option: '', placeholder: '请选择片区名称'},
+        {label: '店铺名称', type: 'dropdown', name: 'storeId', option: this.videoGroupOption, placeholder: '请选择摄像头组'},
         {label: '视频头名称', type: 'input', name: 'cameraName', option: '', placeholder: '请输入视频组名称'},
         {label: '方向', type: 'radio', name: 'orientation', option: '', placeholder: '', value: [{label: '上行', name: 'orientation', value: 1, group: 'group'}, {label: '下行', name: 'orientation', value: 2, group: 'group'}]},
         {label: '是否在店铺内', type: 'radio', name: 'isInStore', option: '', placeholder: '', value: [{label: '是', name: 'isInStore', value: 1, group: 'group1'}, {label: '否', name: 'isInStore', value: 2, group: 'group1'}]},
@@ -199,7 +213,7 @@ export class VideoComponent implements OnInit {
         value => {
           console.log(value);
           this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-            this.queryvideoData(1);
+            this.queryvideoData(this.pageNo);
             this.dialogOption.dialog = false;
             this.videoSelect = [];
             this.formdata = [];
@@ -221,7 +235,8 @@ export class VideoComponent implements OnInit {
   }
   // Pagination (分页)
   public  nowPageClick(e): void {
-    this.queryvideoData(e);
+    this.pageNo = e;
+    this.queryvideoData(this.pageNo);
   }
   // delete videoInfo (删除卡扣)
   public  deletevideo(): void {
@@ -237,7 +252,7 @@ export class VideoComponent implements OnInit {
         this.videoSrv.deleteVideoInfo(this.ids).subscribe(
           value => {
             this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-              this.queryvideoData(1);
+              this.queryvideoData(this.pageNo);
               // this.formgroup.reset();
               this.videoSelect = [];
             });
@@ -273,15 +288,31 @@ export class VideoComponent implements OnInit {
         console.log(e.type === '添加信息');
         if (e.type === '添加信息') {
           for (const eKey in e.value.value) {
-             this.addvideo[eKey] = e.value.value[eKey];
+            if (eKey === 'storeId') {
+              if (e.value.value[eKey] === '') {
+                this.addvideo[eKey] = 0;
+              }else {
+                this.addvideo[eKey] = e.value.value[eKey];
+              }
+            } else if (eKey !== 'name') {
+              this.addvideo[eKey] = e.value.value[eKey];
+
+            }
           }
           // console.log(this.addvideo);
           this.addvideoRequest(this.addvideo);
           // this.areaAddRequest();
         } else  {
           for (const eKey in e.value.value) {
-            if (eKey !== 'storeName') {
+            if (eKey === 'storeId') {
+              if (e.value.value[eKey] === '') {
+                this.modifyvideo[eKey] = 0;
+              }else {
+                this.modifyvideo[eKey] = e.value.value[eKey];
+              }
+            } else  if (eKey !== 'name') {
               this.modifyvideo[eKey] = e.value.value[eKey];
+
             }
           }
           // console.log(this.modifyvideo);

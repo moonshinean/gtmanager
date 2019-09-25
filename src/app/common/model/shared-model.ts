@@ -12,5 +12,6 @@ export class TreeNode {
   remark?: any;
   idt?: any;
   udt?: any;
+  selectable?: any;
   children?: TreeNode[];
 }

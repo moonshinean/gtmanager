@@ -1,8 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {DataTree, DialogModel, FromData} from '../dialog.model';
+import {DataTree, DialogModel, FromData, FromDataDialog} from '../dialog.model';
 import {FormGroup} from '@angular/forms';
 import {TreeNode} from '../../../model/shared-model';
 import {Area, Data} from '../../../model/area-model';
+import {PublicMethedService} from '../../../tool/public-methed.service';
 
 @Component({
   selector: 'rbi-dialog-pop',
@@ -20,7 +21,7 @@ export class DialogPopComponent implements OnInit, OnChanges {
   @Input()
   public formContrl: FormGroup;
   @Input()
-  public formdata: FromData[];
+  public formdata: FromDataDialog[];
   @Input()
   public treeData: any;
   public dataTrees: DataTree[];
@@ -38,7 +39,9 @@ export class DialogPopComponent implements OnInit, OnChanges {
     today: '今天',
     clear: '清除'
   };
-  constructor() { }
+  constructor(
+    private toolSrv: PublicMethedService
+  ) { }
 
   ngOnInit() {
     // this.dialog = false;
@@ -106,19 +109,23 @@ export class DialogPopComponent implements OnInit, OnChanges {
         childnode.value = data[i].companyId;
         childnode.label = data[i].companyName;
         childnode.id = 1;
+        childnode.selectable = false;
       } else if (data[i].hasOwnProperty('areaName')) {
         console.log(data[i].areaName);
         childnode.value = data[i].areaCode;
         childnode.label = data[i].areaName;
         childnode.id = 2;
+        childnode.selectable = false;
       } else if(data[i].hasOwnProperty('serviceAreaName')){
         childnode.value = data[i].serviceAreaId;
         childnode.label = data[i].serviceAreaName;
         childnode.id = 3;
+        childnode.selectable = true;
       } else if (data[i].hasOwnProperty('storeName')) {
         childnode.value = data[i].storeId;
         childnode.label = data[i].storeName;
         childnode.id = 4;
+        childnode.selectable = true;
       }
       if (data[i].hasOwnProperty('companyMngPrvcTreeList')) {
         if (data[i].companyMngPrvcTreeList != null && data[i].companyMngPrvcTreeList.length !== 0 ) {
@@ -180,10 +187,11 @@ export class DialogPopComponent implements OnInit, OnChanges {
   public setData(data): void {
     if (data.id === 3) {
       this.formContrl.patchValue({serviceAreaId: data.value});
-      this.formContrl.patchValue({serviceAreaName: data.label});
+      this.formContrl.patchValue({name: data.label});
+      this.formContrl.patchValue({storeId: ''});
     } else if (data.id === 4) {
       this.formContrl.patchValue({storeId: data.value});
-      this.formContrl.patchValue({storeName: data.label});
+      this.formContrl.patchValue({name: data.label});
       this.formContrl.patchValue({serviceAreaId: data.parent.value});
     }
   }

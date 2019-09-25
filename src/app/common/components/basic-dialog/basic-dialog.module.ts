@@ -17,6 +17,7 @@ import { ReviewPopComponent } from './review-pop/review-pop.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { DialogPopComponent } from './dialog-pop/dialog-pop.component';
 import { ServicePopComponent } from './service-pop/service-pop.component';
+import {PublicMethedService} from '../../tool/public-methed.service';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { ServicePopComponent } from './service-pop/service-pop.component';
     ReviewPopComponent,
     DialogPopComponent,
     ServicePopComponent
-  ]
+  ],
+  providers:[PublicMethedService]
 })
 export class BasicDialogModule { }
