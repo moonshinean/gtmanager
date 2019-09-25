@@ -80,7 +80,7 @@ export class AreaComponent implements OnInit {
         this.toolSrv.setQuestJudgment(value.status, value.message, () => {
           // value.
           value.companyData.forEach( v => {
-            this.companyOption.push({label: v.companyName, value: v.companyId})
+            this.companyOption.push({label: v.companyName, value: v.companyId});
           });
           value.prvinceData.forEach( v => {
             this.prvinceOption.push({label: v.areaName, value: v.areaCode});
@@ -237,7 +237,7 @@ export class AreaComponent implements OnInit {
             });
           }
         );
-      })
+      });
   }
   // btn click Event
   public  btnEvent(e): void {

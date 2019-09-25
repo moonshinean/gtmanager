@@ -28,6 +28,7 @@ export class SerareaFieldTypeComponent implements OnInit {
   public addSerareaFiledType: any;
 
   public modifySerareaFiledType: ModifySerareaFiledType = new ModifySerareaFiledType();
+  public pageNo = 1;
   constructor(
     private serareaFieldTypeSrv: SerareaFieldTypeService,
     private toolSrv: PublicMethedService,
@@ -40,7 +41,7 @@ export class SerareaFieldTypeComponent implements OnInit {
       {label: '修改', style: {background: '#3A78DA', marginLeft: '1vw'} },
       {label: '删除', style: {background: '#A84847', marginLeft: '1vw'} },
     ];
-    this.queryServiceAreaData(1);
+    this.queryServiceAreaData(this.pageNo);
     // this.getServiceConfig();
     // this.getServiceUseField();
   }
@@ -108,7 +109,7 @@ export class SerareaFieldTypeComponent implements OnInit {
         value => {
           this.toolSrv.setQuestJudgment(value.status, value.message, () => {
             this.dialogOption.dialog = false;
-            this.queryServiceAreaData(1);
+            this.queryServiceAreaData(this.pageNo);
             this.formdata = [];
             this.formgroup.reset();
           });
@@ -148,7 +149,7 @@ export class SerareaFieldTypeComponent implements OnInit {
            value =>  {
              this.toolSrv.setQuestJudgment(value.status, value.message, () => {
                 this.dialogOption.dialog = false;
-                this.queryServiceAreaData(1);
+                this.queryServiceAreaData(this.pageNo);
                 this.serareaFieldTypeSelect = [];
                 this.formgroup.reset();
                 this.formdata = [];
@@ -166,7 +167,7 @@ export class SerareaFieldTypeComponent implements OnInit {
         this.serareaFieldTypeSrv.deleteServiceAreaFiledTypeInfo({fileTypeId: this.serareaFieldTypeSelect[0].fieldTypeId}).subscribe(
           value => {
             this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-              this.queryServiceAreaData(1);
+              this.queryServiceAreaData(this.pageNo);
             });
           }
         );
@@ -209,6 +210,12 @@ export class SerareaFieldTypeComponent implements OnInit {
         this.toolSrv.setToast('error', '操作错误', '信息未填完整');
       }
     }
+  }
+
+  public  pageClick(e): void {
+      this.pageNo = e;
+      this.serareaFieldTypeSelect = [];
+      this.queryServiceAreaData(this.pageNo);
   }
 
 }

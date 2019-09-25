@@ -30,6 +30,8 @@ export class SerareaFieldComponent implements OnInit {
 
   public addSerareaField: AddSerareaFiled = new  AddSerareaFiled;
   public modifySerareaField: ModifySerareaFiled = new  ModifySerareaFiled;
+
+  public pageNo = 1;
   constructor(
     private serareaFieldSrv: SerareaFieldService,
     private toolSrv: PublicMethedService,
@@ -42,7 +44,7 @@ export class SerareaFieldComponent implements OnInit {
       {label: '修改', style: {background: '#3A78DA', marginLeft: '1vw'} },
       {label: '删除', style: {background: '#A84847', marginLeft: '1vw'} },
     ];
-    this.queryServiceAreaData(1);
+    this.queryServiceAreaData(this.pageNo);
     this.getServiceTypeConfig();
     // this.getServiceUseField();
   }
@@ -52,6 +54,9 @@ export class SerareaFieldComponent implements OnInit {
       value => {
         console.log(value);
         if (value.status === 1000) {
+            value.fieldInfo.datas.forEach( v => {
+              v.status = (v.status === 1) ? '可删' : '不可删';
+            });
           // this.toolSrv.setQuestJudgment(value.status, value.message, () => {
             this.setTableOption(value.fieldInfo.datas);
             this.serareaFieldPageOption = {nowpage: value.fieldInfo.currentPage, row: value.fieldInfo.pageSize, total: value.fieldInfo.totalRecord};
@@ -99,6 +104,7 @@ export class SerareaFieldComponent implements OnInit {
         {field: 'fieldId', header: '字段Id'},
         {field: 'fieldName', header: '字段名称'},
         {field: 'fieldTypeName', header: '字段类型名称'},
+        {field: 'status', header: '是否可删'},
         {field: 'idt', header: '添加时间'},
       ],
       Content: data,
@@ -160,7 +166,8 @@ export class SerareaFieldComponent implements OnInit {
       list.forEach( val => {
         // console.log(val);
         if (val === 'status') {
-          this.form.push({key: val, disabled: false, required: true, value: 1});
+
+          this.form.push({key: val, disabled: false, required: true, value: this.serareaFieldSelect[0].status === '可删' ? 1 :0});
         } else {
           this.form.push({key: val, disabled: false, required: true, value: this.serareaFieldSelect[0][val]});
 
@@ -170,7 +177,7 @@ export class SerareaFieldComponent implements OnInit {
       this.formdata = [
         {label: '字段类型', type: 'dropdown', name: 'fieldTypeId', option: this.fieldTypeOption, placeholder: '请选择字段类型名称'},
         {label: '字段名称', type: 'input', name: 'fieldName', option: this.fieldTypeOption, placeholder: '请输入字段名称'},
-        {label: '是否可删除状态', type: 'radio', name: 'status', option: '', placeholder: '', value: [{label: '是', name: 'status', value: 1, group: 'group'}, {label: '否', name: 'status', value: 2, group: 'group'}]},
+        {label: '是否可删除状态', type: 'radio', name: 'status', option: '', placeholder: '', value: [{label: '是', name: 'status', value: 1, group: 'group'}, {label: '否', name: 'status', value: 0, group: 'group'}]},
       ];
     } else  {
       this.toolSrv.setToast('error', '操作错误', '请选择一项进行修改');
@@ -184,7 +191,7 @@ export class SerareaFieldComponent implements OnInit {
           console.log(value);
           this.toolSrv.setQuestJudgment(value.status, value.message, () => {
             this.dialogOption.dialog = false;
-            this.queryServiceAreaData(1);
+            this.queryServiceAreaData(this.pageNo);
             this.serareaFieldSelect = [];
             this.formdata = [];
             this.formgroup.reset();
@@ -201,7 +208,7 @@ export class SerareaFieldComponent implements OnInit {
         this.serareaFieldSrv.deleteServiceAreaFiled({fieldId: this.serareaFieldSelect[0].fieldId}).subscribe(
           value => {
             this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-                this.queryServiceAreaData(1);
+                this.queryServiceAreaData(this.pageNo);
                 this.serareaFieldSelect = [];
             });
           }
@@ -256,7 +263,9 @@ export class SerareaFieldComponent implements OnInit {
   }
 
   public  pageClick(e): void {
-      this.queryServiceAreaData(e);
+    this.pageNo = e;
+    this.serareaFieldSelect = [];
+    this.queryServiceAreaData(this.pageNo);
   }
 
 }

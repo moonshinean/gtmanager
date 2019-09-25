@@ -12,7 +12,8 @@ const routes: Routes = [
       {path: 'area', loadChildren: () => import('../business/area/area.module').then(m => m.AreaModule)},
       {path: 'serarea', loadChildren: () => import('../business/serarea/serarea.module').then(m => m.SerareaModule)},
       {path: 'intercept', loadChildren: () => import('../business/intercept/intercept.module').then(m => m.InterceptModule)},
-      {path: 'store', loadChildren: () => import('../business/store/store.module').then(m => m.StoreModule)}
+      {path: 'store', loadChildren: () => import('../business/store/store.module').then(m => m.StoreModule)},
+      {path: 'video', loadChildren: () => import('../business/video/video.module').then(m => m.VideoModule)}
     ]
   }
 ];
