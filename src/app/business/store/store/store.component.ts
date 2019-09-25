@@ -42,6 +42,8 @@ export class StoreComponent implements OnInit {
       {label: '删除', style: {background: '#A84847', marginLeft: '1vw'} },
     ];
     this.querystoreData(this.pageNo);
+    this.getstoreConfigInfo();
+    this.getStoreTypeInfo();
   }
   // select data （选择数据）
   public  selectData(e): void {
@@ -85,8 +87,7 @@ export class StoreComponent implements OnInit {
     );
   }
   public  showAddDialog(): void {
-    this.getstoreConfigInfo();
-    this.getStoreTypeInfo();
+
     this.dialogOption = {
         type: 'add',
         title: '添加信息',
@@ -95,6 +96,7 @@ export class StoreComponent implements OnInit {
       };
     const list = ['serviceAreaId', 'name', 'storeName', 'orientation', 'storeTypeId', 'manage', 'manageTelephone'];
     list.forEach(val => {
+
         this.form.push({key: val, disabled: false, required: true, value: ''});
     });
     this.formgroup = this.toolSrv.setFormGroup(this.form);
@@ -140,7 +142,13 @@ export class StoreComponent implements OnInit {
         };
         const list = ['serviceAreaId', 'name', 'storeName', 'orientation', 'storeTypeId', 'manage', 'manageTelephone'];
         list.forEach(val => {
-          this.form.push({key: val, disabled: false, required: true, value: this.storeSelect[0][val]});
+          if (val ===  'name'){
+
+            this.form.push({key: val, disabled: false, required: true, value: this.storeSelect[0].serviceAreaName});
+
+          } else {
+            this.form.push({key: val, disabled: false, required: true, value: this.storeSelect[0][val]});
+          }
         });
         this.formgroup = this.toolSrv.setFormGroup(this.form);
         this.formdata = [
@@ -160,7 +168,6 @@ export class StoreComponent implements OnInit {
     this.toolSrv.setConfirmation('修改', '修改', () => {
       this.storeSrv.updateStoreInfo(data).subscribe(
         value => {
-          console.log(value);
           this.toolSrv.setQuestJudgment(value.status, value.message, () => {
             this.querystoreData(this.pageNo);
             this.dialogOption.dialog = false;
@@ -168,8 +175,6 @@ export class StoreComponent implements OnInit {
             this.formdata = [];
             this.form = [];
             this.formgroup.reset();
-
-            // this.formdata = [];
           });
         }
       );
