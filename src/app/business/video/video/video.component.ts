@@ -136,8 +136,8 @@ export class VideoComponent implements OnInit {
     });
     this.formgroup = this.toolSrv.setFormGroup(this.form);
     this.formdata = [
-      {label: '服务区/店铺名称', type: 'tree', name: 'name', option: '', placeholder: '请选择片区名称'},
-      {label: '视频头名称', type: 'input', name: 'cameraName', option: '', placeholder: '请输入视频组名称'},
+      {label: '服务区/店铺名称', type: 'tree', name: 'name', option: '', placeholder: '请选择服务区/店铺名称'},
+      {label: '摄像头名称', type: 'input', name: 'cameraName', option: '', placeholder: '请输入摄像头名称'},
       {label: '方向', type: 'radio', name: 'orientation', option: '', placeholder: '', value: [{label: '上行', name: 'orientation', value: 1, group: 'group'}, {label: '下行', name: 'orientation', value: 2, group: 'group'}]},
       {label: '是否在店铺内', type: 'radio', name: 'isInStore', option: '', placeholder: '', value: [{label: '是', name: 'isInStore', value: 1, group: 'group1'}, {label: '否', name: 'isInStore', value: 2, group: 'group1'}]},
       {label: '摄像头组', type: 'dropdown', name: 'groupId', option: this.videoGroupOption, placeholder: '请选择摄像头组'},
@@ -191,13 +191,13 @@ export class VideoComponent implements OnInit {
       });
       this.formgroup = this.toolSrv.setFormGroup(this.form);
       this.formdata = [
-        {label: '服务区/店铺名称', type: 'tree', name: 'name', option: '', placeholder: '请选择片区名称'},
-        {label: '店铺名称', type: 'dropdown', name: 'storeId', option: this.videoGroupOption, placeholder: '请选择摄像头组'},
-        {label: '视频头名称', type: 'input', name: 'cameraName', option: '', placeholder: '请输入视频组名称'},
+        {label: '服务区/店铺名称', type: 'tree', name: 'name', option: '', placeholder: '请选择服务区/店铺名称'},
+        // {label: '摄像头组', type: 'dropdown', name: 'storeId', option: this.videoGroupOption, placeholder: '请选择摄像头组'},
+        {label: '摄像头名称', type: 'input', name: 'cameraName', option: '', placeholder: '请输入摄像头名称'},
         {label: '方向', type: 'radio', name: 'orientation', option: '', placeholder: '', value: [{label: '上行', name: 'orientation', value: 1, group: 'group'}, {label: '下行', name: 'orientation', value: 2, group: 'group'}]},
         {label: '是否在店铺内', type: 'radio', name: 'isInStore', option: '', placeholder: '', value: [{label: '是', name: 'isInStore', value: 1, group: 'group1'}, {label: '否', name: 'isInStore', value: 2, group: 'group1'}]},
         {label: '摄像头组', type: 'dropdown', name: 'groupId', option: this.videoGroupOption, placeholder: '请选择摄像头组'},
-        {label: '摄像头类型', type: 'radio', name: 'cameraType', option: this.videoGroupOption, placeholder: '请选择摄像头组', value: [{label: '球机', name: 'cameraType', value: 1, group: 'group2'}, {label: '半球', name: 'cameraType', value: 2, group: 'group2'}, {label: '枪机', name: 'cameraType', value: 3, group: 'group2'}]},
+        {label: '摄像头类型', type: 'radio', name: 'cameraType', option: this.videoGroupOption, placeholder: '', value: [{label: '球机', name: 'cameraType', value: 1, group: 'group2'}, {label: '半球', name: 'cameraType', value: 2, group: 'group2'}, {label: '枪机', name: 'cameraType', value: 3, group: 'group2'}]},
         {label: '视频源地址', type: 'input', name: 'videoUrl', option: '', placeholder: '请输入视频源地址'},
         {label: '外网URL', type: 'input', name: 'outUrl', option: '', placeholder: '请输入视频外网URL'},
         {label: '内网URL', type: 'input', name: 'innerUrl', option: '', placeholder: '请输入视频内网URL'},

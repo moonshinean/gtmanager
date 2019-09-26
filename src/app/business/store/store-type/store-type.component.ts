@@ -88,7 +88,7 @@ export class StoreTypeComponent implements OnInit {
     });
     this.formgroup = this.toolSrv.setFormGroup(this.form);
     this.formdata = [
-      {label: '管理人电话', type: 'input', name: 'storeTypeName', option: '', placeholder: '请输入店铺类型名称'},
+      {label: '店铺类型名称', type: 'input', name: 'storeTypeName', option: '', placeholder: '请输入店铺类型名称'},
     ];
   }
 
@@ -122,7 +122,7 @@ export class StoreTypeComponent implements OnInit {
       });
       this.formgroup = this.toolSrv.setFormGroup(this.form);
       this.formdata = [
-        {label: '管理人电话', type: 'input', name: 'storeTypeName', option: '', placeholder: '请输入店铺类型名称'},
+        {label: '店铺类型名称', type: 'input', name: 'storeTypeName', option: '', placeholder: '请输入店铺类型名称'},
       ];
     } else {
       this.toolSrv.setToast('error', '操作错误', '只能选择一项进行修改');

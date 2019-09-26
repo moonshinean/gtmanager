@@ -52,7 +52,7 @@ export class InterceptComponent implements OnInit {
     this.interceptTableOption = {
       width: '100%',
       header: [
-        {field: 'areaCode', header: '区域编号'},
+        {field: 'bayonetCode', header: '卡口标识'},
         {field: 'areaName', header: '区域名称'},
         {field: 'serviceAreaName', header: '服务区名称'},
         {field: 'bayonetName', header: '卡口名称'},
@@ -134,10 +134,10 @@ export class InterceptComponent implements OnInit {
       list.forEach(val => {
         if (val === 'orientation'){
           this.form.push({key: val, disabled: false, required: true, value: (this.interceptSelect[0][val] === '上行') ? 1 : 2 });
-
-        } else {
+        } else if (val === 'name') {
+          this.form.push({key: val, disabled: false, required: true, value: this.interceptSelect[0].serviceAreaName});
+        }else {
           this.form.push({key: val, disabled: false, required: true, value: this.interceptSelect[0][val]});
-
         }
       });
       this.formgroup = this.toolSrv.setFormGroup(this.form);

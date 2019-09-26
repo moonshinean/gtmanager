@@ -63,15 +63,16 @@ export class SidebarComponent implements OnInit {
   public difulHeight: number;
   constructor(private router: Router) {}
   ngOnInit() {}
-  public menuOnMousEnter(element): void {
-    element.srcElement.style.left = '0';
-    this.logoShow = true;
-  }
-  public onMouseleave(element): void {
-    this.slidingTop = -120;
-    element.srcElement.style.left = '-143px';
-    this.logoShow = false;
-  }
+  // public menuOnMousEnter(element): void {
+  //   console.log(element);
+  //   element.srcElement.style.left = '0';
+  //   this.logoShow = true;
+  // }
+  // public onMouseleave(element): void {
+  //   this.slidingTop = -120;
+  //   element.srcElement.style.left = '-143px';
+  //   this.logoShow = false;
+  // }
   public mainLiMouseEnter(element): void {
     this.slidingTop =  element.offsetTop;
     this.slidinghight = element.offsetHeight;

@@ -85,7 +85,7 @@ export class VideoGroupComponent implements OnInit {
     });
     this.formgroup = this.toolSrv.setFormGroup(this.form);
     this.formdata = [
-      {label: '摄像组名称', type: 'input', name: 'groupName', option: '', placeholder: '请输入摄像组名称'},
+      {label: '摄像头组名称', type: 'input', name: 'groupName', option: '', placeholder: '请输入摄像头组名称'},
     ];
   }
 
@@ -123,7 +123,7 @@ export class VideoGroupComponent implements OnInit {
       });
       this.formgroup = this.toolSrv.setFormGroup(this.form);
       this.formdata = [
-        {label: '摄像组名称', type: 'input', name: 'groupName', option: '', placeholder: '请输入摄像组名称'},
+        {label: '摄像头组名称', type: 'input', name: 'groupName', option: '', placeholder: '请输入摄像头组名称'},
       ];
     } else {
       this.toolSrv.setToast('error', '操作错误', '只能选择一项进行修改');

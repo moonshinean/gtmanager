@@ -78,6 +78,7 @@ export class SerareaComponent implements OnInit {
   public getServiceConfig(): void {
     this.serareaSrv.queryServiceAreaConfig({companyId: environment.companyId}).subscribe(
       value => {
+        console.log(value);
         if (value.status === 1000) {
           this.companyTree = value.companyComboBoxTreeList;
         }
@@ -88,6 +89,7 @@ export class SerareaComponent implements OnInit {
   public getServiceUseField(): void {
     this.serareaSrv.queryServiceAreaField({}).subscribe(
       value => {
+        console.log(value);
         if (value.status === 1000) {
           value.fieldTreeList.forEach(v => {
             const list = [];
