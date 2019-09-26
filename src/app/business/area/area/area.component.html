@@ -16,5 +16,5 @@
     [formdata]="addformData"
     [formContrl]="formgroup"
     (eventClick)="eventClick($event)"></rbi-dialog-pop>
-  <rbi-paging [option]="pageOption"></rbi-paging>
+  <rbi-paging [option]="pageOption" (pageClick)="nowPageClick($event)"></rbi-paging>
 </div>

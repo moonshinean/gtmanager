@@ -63,12 +63,11 @@ export class StoreTypeComponent implements OnInit {
   public querystoreTypeData(data): void {
     this.storeTypeSrv.queryStoreTypeDataPage({currentPage: data, pageSize: 10, companyId: environment.companyId}).subscribe(
       value => {
-        console.log(value);
         this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-          this.storeTypeSelect = [];
           value.paingQueryData.datas.forEach( v => {
             v.enabled = (v.enabled === 1) ? '启用' : '禁用';
           });
+          this.storeTypeSelect = [];
           this.setTableOption(value.paingQueryData.datas);
           this.pageOption = {nowpage: value.paingQueryData.currentPage, row: value.paingQueryData.pageSize, total: value.paingQueryData.totalPage};
 
@@ -97,7 +96,6 @@ export class StoreTypeComponent implements OnInit {
     this.toolSrv.setConfirmation('添加', '添加', () => {
       this.storeTypeSrv.addStoreType(data).subscribe(
         value => {
-          console.log(value);
           this.toolSrv.setQuestJudgment(value.status, value.message, () => {
             this.querystoreTypeData(this.pageNo);
             this.dialogOption.dialog = false;

@@ -54,6 +54,7 @@ export class SerareaFieldTypeComponent implements OnInit {
           value.fieldType.datas.forEach( v => {
              v.enabled = (v.enabled === 1) ? '启用' : '禁用';
           });
+          this.serareaFieldTypeSelect = [];
           this.setTableOption(value.fieldType.datas);
           this.serareaFieldTypePageOption = {nowpage: value.fieldType.currentPage, row: value.fieldType.pageSize, total: value.fieldType.totalPage};
         });
@@ -214,7 +215,7 @@ export class SerareaFieldTypeComponent implements OnInit {
 
   public  pageClick(e): void {
       this.pageNo = e;
-      this.serareaFieldTypeSelect = [];
+
       this.queryServiceAreaData(this.pageNo);
   }
 

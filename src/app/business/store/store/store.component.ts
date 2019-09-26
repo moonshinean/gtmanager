@@ -101,7 +101,7 @@ export class StoreComponent implements OnInit {
     });
     this.formgroup = this.toolSrv.setFormGroup(this.form);
     this.formdata = [
-      {label: '服务区名称', type: 'tree', name: 'name', option: '', placeholder: '请选择片区名称'},
+      {label: '服务区名称', type: 'tree', name: 'name', option: '', placeholder: '请选择服务区名称'},
       {label: '店铺名称', type: 'input', name: 'storeName', option: '', placeholder: '请输入店铺名称'},
       {label: '方向', type: 'radio', name: 'orientation', option: '', placeholder: '', value: [{label: '上行', name: 'orientation', value: 1, group: 'group'}, {label: '下行', name: 'orientation', value: 2, group: 'group'}]},
       {label: '店铺类型', type: 'dropdown', name: 'storeTypeId', option: this.storeTypeOption, placeholder: '请选择店铺类型'},
@@ -152,7 +152,7 @@ export class StoreComponent implements OnInit {
         });
         this.formgroup = this.toolSrv.setFormGroup(this.form);
         this.formdata = [
-          {label: '服务区名称', type: 'tree', name: 'name', option: '', placeholder: '请选择片区名称'},
+          {label: '服务区名称', type: 'tree', name: 'name', option: '', placeholder: '请选择服务区名称'},
           {label: '店铺名称', type: 'input', name: 'storeName', option: this.companyOption, placeholder: '请选择店铺名称'},
           {label: '方向', type: 'radio', name: 'orientation', option: '', placeholder: '', value: [{label: '上行', name: 'orientation', value: 1, group: 'group'}, {label: '下行', name: 'orientation', value: 2, group: 'group'}]},
           {label: '店铺类型', type: 'dropdown', name: 'storeTypeId', option: this.storeTypeOption, placeholder: '请选择店铺类型'},
@@ -235,7 +235,6 @@ export class StoreComponent implements OnInit {
       this.formgroup.reset();
     } else {
       if (e.invalid) {
-        console.log(e.type === '添加信息');
         if (e.type === '添加信息') {
           for (const eKey in e.value.value) {
             // this.addArea[eKey] = e.value.value[eKey];
@@ -245,7 +244,6 @@ export class StoreComponent implements OnInit {
           }
           console.log(this.addStore);
           this.addStoreRequest(this.addStore);
-          // this.areaAddRequest();
         } else  {
           for (const eKey in e.value.value) {
               if (eKey !== 'name') {

@@ -15,12 +15,10 @@ import {AddVideoGroup, ModifyVideoGroup} from '../../../common/model/vide.model'
 })
 export class VideoGroupComponent implements OnInit {
 
-
   public btnOption: BtnOption = new BtnOption();
   public videoGroupSelect: any[] = [];
   public videoGroupTableOption: any;
   public pageOption: PagingOption = new PagingOption();
-
   public form: FormValue[] = [];
   public formgroup: FormGroup;
   public dialogOption: any;
@@ -182,7 +180,6 @@ export class VideoGroupComponent implements OnInit {
     }
   }
   public  eventClick(e): void {
-    console.log(e);
     if (e === 'false') {
       this.dialogOption.dialog = false;
       this.videoGroupSelect = [];

@@ -57,7 +57,7 @@ export class SerareaFieldComponent implements OnInit {
             value.fieldInfo.datas.forEach( v => {
               v.status = (v.status === 1) ? '可删' : '不可删';
             });
-          // this.toolSrv.setQuestJudgment(value.status, value.message, () => {
+            this.serareaFieldSelect = [];
             this.setTableOption(value.fieldInfo.datas);
             this.serareaFieldPageOption = {nowpage: value.fieldInfo.currentPage, row: value.fieldInfo.pageSize, total: value.fieldInfo.totalRecord};
           // });
@@ -264,7 +264,7 @@ export class SerareaFieldComponent implements OnInit {
 
   public  pageClick(e): void {
     this.pageNo = e;
-    this.serareaFieldSelect = [];
+
     this.queryServiceAreaData(this.pageNo);
   }
 

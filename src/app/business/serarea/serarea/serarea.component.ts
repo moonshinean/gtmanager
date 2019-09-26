@@ -41,6 +41,7 @@ export class SerareaComponent implements OnInit {
   // 修改相关
   public modifyOption = [];
 
+  public pageNo = 1;
   constructor(
     private serareaSrv: SerareaService,
     private toolSrv: PublicMethedService,
@@ -54,7 +55,7 @@ export class SerareaComponent implements OnInit {
       {label: '修改', style: {background: '#3A78DA', marginLeft: '1vw'}},
       {label: '删除', style: {background: '#A84847', marginLeft: '1vw'}},
     ];
-    this.queryServiceAreaData(1);
+    this.queryServiceAreaData(this.pageNo);
     this.getServiceConfig();
     this.getServiceUseField();
   }
@@ -177,7 +178,7 @@ export class SerareaComponent implements OnInit {
         value => {
           this.toolSrv.setQuestJudgment(value.status, value.message, () => {
             this.dialogOption.dialog = false;
-            this.queryServiceAreaData(1);
+            this.queryServiceAreaData(this.pageNo);
             this.clearData();
           });
         }
@@ -208,7 +209,7 @@ export class SerareaComponent implements OnInit {
           value => {
             this.toolSrv.setQuestJudgment(value.status, value.message, () => {
               this.dialogOption.dialog = false;
-              this.queryServiceAreaData(1);
+              this.queryServiceAreaData(this.pageNo);
               this.clearData();
             });
           }
@@ -224,7 +225,7 @@ export class SerareaComponent implements OnInit {
          this.serareaSrv.deleteServiceInfo({serviceAreaId: this.serareaSelect[0].serviceAreaId}).subscribe(
            value => {
              this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-               this.queryServiceAreaData(1);
+               this.queryServiceAreaData(this.pageNo);
                this.clearData();
              });
            }
@@ -259,6 +260,10 @@ export class SerareaComponent implements OnInit {
         break;
     }
   }
+  public  nowPageClick(e): void {
+      this.pageNo = e;
+      this.queryServiceAreaData(this.pageNo);
+  }
 
   public eventClick(e): void {
     console.log(e);
@@ -281,10 +286,6 @@ export class SerareaComponent implements OnInit {
           this.addSerarea.fieldVaulesMap = list;
           this.addSerareaRequest(this.addSerarea);
         } else {
-          // this.FiledList.forEach( vFiled => {
-          //   console.log(vFiled.drop[0].name);
-          //   e.value.reset(vFiled.drop[0].name);
-          // });
           const list = {};
           for (const eKey in e.value.value) {
             if (eKey.includes('-d')) {
@@ -345,7 +346,6 @@ export class SerareaComponent implements OnInit {
         }
       });
     } else {
-      console.log('删除');
       let filedeId = '';
       this.FiledList.forEach(v => {
         if (v.title === e.type) {
@@ -372,7 +372,6 @@ export class SerareaComponent implements OnInit {
                   this.serareaSrv.getServiceInfoById({serviceAreaId: this.serareaSelect[0].serviceAreaId}).subscribe(
                     value => {
                       if (value.status === 1000) {
-                        console.log(value.serviceAreaDetailedInfo.fieldTreeList);
                         value.serviceAreaDetailedInfo.fieldTreeList.forEach((v, index) => {
                           if (v.field.length < this.FiledList[index].data.length) {
                             this.form.forEach( (vform, vindex) => {
@@ -381,10 +380,7 @@ export class SerareaComponent implements OnInit {
                               }
                             });
                             this.FiledList[index].data.splice(this.FiledList[index].data.length - 1, 1);
-                            console.log( this.FiledList[index].data);
-                            console.log(this.modifyOption[index]);
                             if (this.modifyOption[index].length >= 0) {
-                              console.log(this.modifyOption[index].length);
                                  this.FiledList[index].drop.push({lable: '', type: 'dropdown', name: 'fieldName-d' + index, option: this.modifyOption[index], placeholder: '请选择未添加的' + v.fieldTypeName});
                                  this.form.push({key: 'fieldName-d' + index, disabled: false, required: false, value: ''});
                                  if (this.FiledList[index].drop.length > 1) {

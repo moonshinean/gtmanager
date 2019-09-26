@@ -24,10 +24,8 @@ export class VideoComponent implements OnInit {
   public formgroup: FormGroup;
   public dialogOption: any;
   public formdata: any[];
-  public companyOption: any[] = [];
   public addvideo: AddVideo = new AddVideo();
   public modifyvideo: ModifyVideo = new ModifyVideo();
-  public videoTypeOption = [];
   public companyTree: any;
   public videoGroupOption = [];
   public ids = [];
@@ -130,7 +128,9 @@ export class VideoComponent implements OnInit {
     list.forEach(val => {
       if (val === 'isInStore' ||  val === 'orientation' || val === 'cameraType') {
         this.form.push({key: val, disabled: false, required: true, value: 1});
-      }else {
+      } else if (val === 'storeId') {
+        this.form.push({key: val, disabled: false, required: false, value: ''});
+      } else {
         this.form.push({key: val, disabled: false, required: true, value: ''});
       }
     });

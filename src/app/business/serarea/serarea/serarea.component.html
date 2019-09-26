@@ -19,5 +19,5 @@
     (eventClick)="eventClick($event)"
     (delBtnClick)="delBtnClick($event)"
    (ChangeDataClick) = 'chageData($event)'></rbi-service-pop>
-  <rbi-paging [option]="serareaPageOption"></rbi-paging>
+  <rbi-paging [option]="serareaPageOption" (pageClick)="nowPageClick($event)"></rbi-paging>
 </div>

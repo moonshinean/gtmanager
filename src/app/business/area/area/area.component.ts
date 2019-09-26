@@ -31,7 +31,7 @@ export class AreaComponent implements OnInit {
   public formgroup: FormGroup;
 
   public expandedData: ExpandedData = new ExpandedData();
-
+  public pageNo = 1;
   constructor(
     private areaSrv: AreaService,
     private toolSrv: PublicMethedService,
@@ -50,7 +50,7 @@ export class AreaComponent implements OnInit {
   }
   // areainfo Initialization
   public  areaInitialization(): void {
-     this.queryAreaDataPage(1);
+     this.queryAreaDataPage(this.pageNo);
      this.queryAreaBasicData();
   }
   // select table  data
@@ -72,6 +72,7 @@ export class AreaComponent implements OnInit {
       value => {
         console.log(value);
         if (value.status === 1000) {
+          this.areaSelect = [];
           this.setTableOption(this.tableTreeInitialize(value.paingQueryData.datas));
           this.pageOption = {nowpage: value.paingQueryData.currentPage, row: value.paingQueryData.pageSize, total: value.paingQueryData.totalPage};
         }
@@ -149,7 +150,7 @@ export class AreaComponent implements OnInit {
           this.toolSrv.setQuestJudgment(value.status, value.message, () => {
             this.addDialogOption.dialog = false;
             this.formgroup.reset();
-            this.queryAreaDataPage(1);
+            this.queryAreaDataPage(this.pageNo);
           });
         }
       );
@@ -170,7 +171,7 @@ export class AreaComponent implements OnInit {
           this.areaSrv.deleteAreaData({targetId: this.areaSelect[0].data.areaCode, areaLevel: this.areaSelect[0].data.areaLevel}).subscribe(
             value => {
               this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-                this.queryAreaDataPage(1);
+                this.queryAreaDataPage(this.pageNo);
                 this.areaSelect = [];
               });
             }
@@ -241,7 +242,7 @@ export class AreaComponent implements OnInit {
         this.areaSrv.modifyAreaData(this.modifyArea).subscribe(
           value => {
             this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-              this.queryAreaDataPage(1);
+              this.queryAreaDataPage(this.pageNo);
               this.addDialogOption.dialog = false;
               this.formgroup.reset();
               this.areaSelect = [];
@@ -342,5 +343,10 @@ export class AreaComponent implements OnInit {
       oneChild.push(childnode);
     }
     return oneChild;
+  }
+
+  public  nowPageClick(e): void {
+      this.pageNo = e;
+      this.queryAreaDataPage(this.pageNo)
   }
 }

@@ -28,6 +28,7 @@ export class InterceptComponent implements OnInit {
   public companyTree: any;
   public addIntercept: addInterceptData = new addInterceptData();
   public modifyIntercept: modifyInterceptData = new modifyInterceptData();
+  public pageNo = 1;
   constructor(
     private interceptSrv: InterceptService,
     private toolSrv: PublicMethedService
@@ -39,7 +40,7 @@ export class InterceptComponent implements OnInit {
       {label: '修改', style: {background: '#3A78DA', marginLeft: '1vw'} },
       {label: '删除', style: {background: '#A84847', marginLeft: '1vw'} },
     ];
-    this.queryInterceptData(1);
+    this.queryInterceptData(this.pageNo);
     this.getInterceptConfigInfo();
   }
   // select data （选择数据）
@@ -107,7 +108,7 @@ export class InterceptComponent implements OnInit {
           value => {
 
             this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-              this.queryInterceptData(1);
+              this.queryInterceptData(this.pageNo);
               this.dialogOption.dialog = false;
               this.interceptSelect = [];
               this.formgroup.reset();
@@ -159,7 +160,7 @@ export class InterceptComponent implements OnInit {
         value => {
           console.log(value);
           this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-            this.queryInterceptData(1);
+            this.queryInterceptData(this.pageNo);
             this.dialogOption.dialog = false;
             this.formdata = [];
             this.interceptSelect = [];
@@ -181,7 +182,8 @@ export class InterceptComponent implements OnInit {
 
   // Pagination (分页)
   public  nowPageClick(e): void {
-      this.queryInterceptData(e);
+      this.pageNo = e;
+      this.queryInterceptData(this.pageNo);
   }
   // delete interceot (删除卡扣)
   public  deleteIntercept(): void {
@@ -190,7 +192,7 @@ export class InterceptComponent implements OnInit {
        this.interceptSrv.deleteIntercept({bayonetId: this.interceptSelect[0].bayonetId}).subscribe(
          value => {
            this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-             this.queryInterceptData(1);
+             this.queryInterceptData(this.pageNo);
              this.interceptSelect = [];
            });
          }
