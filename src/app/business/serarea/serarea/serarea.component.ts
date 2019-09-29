@@ -56,8 +56,8 @@ export class SerareaComponent implements OnInit {
       {label: '删除', style: {background: '#A84847', marginLeft: '1vw'}},
     ];
     this.queryServiceAreaData(this.pageNo);
-    // this.getServiceConfig();
-    // this.getServiceUseField();
+    this.getServiceConfig();
+    this.getServiceUseField();
   }
 
   public queryServiceAreaData(pageNo): void {

@@ -126,8 +126,10 @@ export class VideoComponent implements OnInit {
     const list = ['cameraName',  'serviceAreaId', 'orientation', 'storeId', 'name', 'isInStore',
       'groupId', 'cameraType', 'videoUrl', 'outUrl', 'innerUrl'];
     list.forEach(val => {
-      if (val === 'isInStore' ||  val === 'orientation' || val === 'cameraType') {
+      if (val === 'isInStore' ||   val === 'cameraType') {
         this.form.push({key: val, disabled: false, required: true, value: 1});
+      } else if( val === 'orientation' ) {
+        this.form.push({key: val, disabled: false, required: true, value: 2});
       } else if (val === 'storeId') {
         this.form.push({key: val, disabled: false, required: false, value: ''});
       } else {
@@ -138,7 +140,7 @@ export class VideoComponent implements OnInit {
     this.formdata = [
       {label: '服务区/店铺名称', type: 'tree', name: 'name', option: '', placeholder: '请选择服务区/店铺名称'},
       {label: '摄像头名称', type: 'input', name: 'cameraName', option: '', placeholder: '请输入摄像头名称'},
-      {label: '方向', type: 'radio', name: 'orientation', option: '', placeholder: '', value: [{label: '上行', name: 'orientation', value: 1, group: 'group'}, {label: '下行', name: 'orientation', value: 2, group: 'group'}]},
+      {label: '方向', type: 'radio', name: 'orientation', option: '', placeholder: '', value: [{label: '上行', name: 'orientation', value: 2, group: 'group'}, {label: '下行', name: 'orientation', value: 3, group: 'group'}]},
       {label: '是否在店铺内', type: 'radio', name: 'isInStore', option: '', placeholder: '', value: [{label: '是', name: 'isInStore', value: 1, group: 'group1'}, {label: '否', name: 'isInStore', value: 2, group: 'group1'}]},
       {label: '摄像头组', type: 'dropdown', name: 'groupId', option: this.videoGroupOption, placeholder: '请选择摄像头组'},
       {label: '摄像头类型', type: 'radio', name: 'cameraType', option: this.videoGroupOption, placeholder: '请选择摄像头组', value: [{label: '球机', name: 'cameraType', value: 1, group: 'group2'}, {label: '半球', name: 'cameraType', value: 2, group: 'group2'}, {label: '枪机', name: 'cameraType', value: 3, group: 'group2'}]},
@@ -194,7 +196,7 @@ export class VideoComponent implements OnInit {
         {label: '服务区/店铺名称', type: 'tree', name: 'name', option: '', placeholder: '请选择服务区/店铺名称'},
         // {label: '摄像头组', type: 'dropdown', name: 'storeId', option: this.videoGroupOption, placeholder: '请选择摄像头组'},
         {label: '摄像头名称', type: 'input', name: 'cameraName', option: '', placeholder: '请输入摄像头名称'},
-        {label: '方向', type: 'radio', name: 'orientation', option: '', placeholder: '', value: [{label: '上行', name: 'orientation', value: 1, group: 'group'}, {label: '下行', name: 'orientation', value: 2, group: 'group'}]},
+        {label: '方向', type: 'radio', name: 'orientation', option: '', placeholder: '', value: [{label: '上行', name: 'orientation', value: 2, group: 'group'}, {label: '下行', name: 'orientation', value: 3, group: 'group'}]},
         {label: '是否在店铺内', type: 'radio', name: 'isInStore', option: '', placeholder: '', value: [{label: '是', name: 'isInStore', value: 1, group: 'group1'}, {label: '否', name: 'isInStore', value: 2, group: 'group1'}]},
         {label: '摄像头组', type: 'dropdown', name: 'groupId', option: this.videoGroupOption, placeholder: '请选择摄像头组'},
         {label: '摄像头类型', type: 'radio', name: 'cameraType', option: this.videoGroupOption, placeholder: '', value: [{label: '球机', name: 'cameraType', value: 1, group: 'group2'}, {label: '半球', name: 'cameraType', value: 2, group: 'group2'}, {label: '枪机', name: 'cameraType', value: 3, group: 'group2'}]},

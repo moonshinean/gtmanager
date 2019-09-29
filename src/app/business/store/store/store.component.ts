@@ -96,14 +96,17 @@ export class StoreComponent implements OnInit {
       };
     const list = ['serviceAreaId', 'name', 'storeName', 'orientation', 'storeTypeId', 'manage', 'manageTelephone'];
     list.forEach(val => {
-
-        this.form.push({key: val, disabled: false, required: true, value: ''});
+       if ( val === 'orientation' ) {
+            this.form.push({key: val, disabled: false, required: true, value: 2});
+          } else {
+         this.form.push({key: val, disabled: false, required: true, value: ''});
+       }
     });
     this.formgroup = this.toolSrv.setFormGroup(this.form);
     this.formdata = [
       {label: '服务区名称', type: 'tree', name: 'name', option: '', placeholder: '请选择服务区名称'},
       {label: '店铺名称', type: 'input', name: 'storeName', option: '', placeholder: '请输入店铺名称'},
-      {label: '方向', type: 'radio', name: 'orientation', option: '', placeholder: '', value: [{label: '上行', name: 'orientation', value: 1, group: 'group'}, {label: '下行', name: 'orientation', value: 2, group: 'group'}]},
+      {label: '方向', type: 'radio', name: 'orientation', option: '', placeholder: '', value: [{label: '上行', name: 'orientation', value: 2, group: 'group'}, {label: '下行', name: 'orientation', value: 3, group: 'group'}]},
       {label: '店铺类型', type: 'dropdown', name: 'storeTypeId', option: this.storeTypeOption, placeholder: '请选择店铺类型'},
       {label: '管理人', type: 'input', name: 'manage', option: '', placeholder: '请输入管理人姓名'},
       {label: '管理人电话', type: 'input', name: 'manageTelephone', option: '', placeholder: '请输入管理人电话'},
@@ -142,10 +145,8 @@ export class StoreComponent implements OnInit {
         };
         const list = ['serviceAreaId', 'name', 'storeName', 'orientation', 'storeTypeId', 'manage', 'manageTelephone'];
         list.forEach(val => {
-          if (val ===  'name'){
-
+          if (val ===  'name') {
             this.form.push({key: val, disabled: false, required: true, value: this.storeSelect[0].serviceAreaName});
-
           } else {
             this.form.push({key: val, disabled: false, required: true, value: this.storeSelect[0][val]});
           }
@@ -154,7 +155,7 @@ export class StoreComponent implements OnInit {
         this.formdata = [
           {label: '服务区名称', type: 'tree', name: 'name', option: '', placeholder: '请选择服务区名称'},
           {label: '店铺名称', type: 'input', name: 'storeName', option: this.companyOption, placeholder: '请选择店铺名称'},
-          {label: '方向', type: 'radio', name: 'orientation', option: '', placeholder: '', value: [{label: '上行', name: 'orientation', value: 1, group: 'group'}, {label: '下行', name: 'orientation', value: 2, group: 'group'}]},
+          {label: '方向', type: 'radio', name: 'orientation', option: '', placeholder: '', value: [{label: '上行', name: 'orientation', value: 2, group: 'group'}, {label: '下行', name: 'orientation', value: 3, group: 'group'}]},
           {label: '店铺类型', type: 'dropdown', name: 'storeTypeId', option: this.storeTypeOption, placeholder: '请选择店铺类型'},
           {label: '管理人', type: 'input', name: 'manage', option: '', placeholder: '请输入管理人姓名'},
           {label: '管理人电话', type: 'input', name: 'manageTelephone', option: '', placeholder: '请输入管理人电话'},
