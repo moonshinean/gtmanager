@@ -56,13 +56,14 @@ export class SerareaComponent implements OnInit {
       {label: '删除', style: {background: '#A84847', marginLeft: '1vw'}},
     ];
     this.queryServiceAreaData(this.pageNo);
-    this.getServiceConfig();
-    this.getServiceUseField();
+    // this.getServiceConfig();
+    // this.getServiceUseField();
   }
 
   public queryServiceAreaData(pageNo): void {
     this.serareaSrv.queryServiceAreaDataPage({currentPage: pageNo, pageSize: 10, companyId: environment.companyId}).subscribe(
       value => {
+        console.log(value);
         this.toolSrv.setQuestJudgment(value.status, value.message, () => {
           this.setTableOption(value.paingQueryData.datas);
           this.serareaPageOption = {
@@ -78,7 +79,6 @@ export class SerareaComponent implements OnInit {
   public getServiceConfig(): void {
     this.serareaSrv.queryServiceAreaConfig({companyId: environment.companyId}).subscribe(
       value => {
-        console.log(value);
         if (value.status === 1000) {
           this.companyTree = value.companyComboBoxTreeList;
         }
@@ -89,7 +89,6 @@ export class SerareaComponent implements OnInit {
   public getServiceUseField(): void {
     this.serareaSrv.queryServiceAreaField({}).subscribe(
       value => {
-        console.log(value);
         if (value.status === 1000) {
           value.fieldTreeList.forEach(v => {
             const list = [];

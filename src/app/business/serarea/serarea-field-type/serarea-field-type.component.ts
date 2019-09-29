@@ -56,7 +56,7 @@ export class SerareaFieldTypeComponent implements OnInit {
           });
           this.serareaFieldTypeSelect = [];
           this.setTableOption(value.fieldType.datas);
-          this.serareaFieldTypePageOption = {nowpage: value.fieldType.currentPage, row: value.fieldType.pageSize, total: value.fieldType.totalPage};
+          this.serareaFieldTypePageOption = {nowpage: value.fieldType.currentPage, row: value.fieldType.pageSize, total: value.fieldType.totalRecord};
         });
       }
     );

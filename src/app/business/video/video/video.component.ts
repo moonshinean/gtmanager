@@ -76,7 +76,7 @@ export class VideoComponent implements OnInit {
         this.toolSrv.setQuestJudgment(value.status, value.message, () => {
           this.videoSelect = [];
           this.setTableOption(value.paingQueryData.datas);
-          this.pageOption = {nowpage: value.paingQueryData.currentPage, row: value.paingQueryData.pageSize, total: value.paingQueryData.totalPage};
+          this.pageOption = {nowpage: value.paingQueryData.currentPage, row: value.paingQueryData.pageSize, total: value.paingQueryData.totalRecord};
         });
       }
     );
