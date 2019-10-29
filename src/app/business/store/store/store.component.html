@@ -5,7 +5,12 @@
   <p-confirmDialog acceptLabel="确认" rejectLabel="取消"></p-confirmDialog>
   <rbi-s-loation locationTitle="区域管理"></rbi-s-loation>
   <div class="store-header">
-    <rbi-basic-btn [btnOption]="btnOption" (event)="btnEvent($event)"></rbi-basic-btn>
+    <rbi-basic-btn
+      [btnOption]="btnOption"
+      (event)="btnEvent($event)"
+      [treeData]="searchCompanyTree"
+      (searchEvent) = "searchEvent($event)"
+    ></rbi-basic-btn>
   </div>
   <div class="store-table">
     <rbi-check-table-btn [select]="storeSelect" (selectData)="selectData($event)" [option]="storeTableOption"></rbi-check-table-btn>

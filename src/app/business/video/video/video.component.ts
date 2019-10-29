@@ -44,6 +44,8 @@ export class VideoComponent implements OnInit {
     ];
     this.queryvideoData(this.pageNo);
     this.getvideoConfigInfo();
+    this.queryVideoConfig();
+    this.getVideoGroupInfo();
 
     // this.getvideoTypeInfo();
   }
@@ -58,6 +60,7 @@ export class VideoComponent implements OnInit {
       header: [
         {field: 'areaName', header: '片区名称'},
         {field: 'serviceAreaName', header: '服务区名称'},
+        {field: 'orientation', header: '服务区方向'},
         {field: 'storeName', header: '店铺名称'},
         {field: 'cameraName', header: '摄像头名称'},
         {field: 'groupName', header: '摄像头组名称'},
@@ -73,11 +76,16 @@ export class VideoComponent implements OnInit {
   public queryvideoData(data): void {
     this.videoSrv.queryVideoDataPage({currentPage: data, pageSize: 10, companyId: environment.companyId}).subscribe(
       value => {
-        this.toolSrv.setQuestJudgment(value.status, value.message, () => {
+        if (value.status === 1000) {
           this.videoSelect = [];
+          value.paingQueryData.datas.forEach( v => {
+            v.orientation = v.orientation === 2 ? '上行' : '下行';
+          });
           this.setTableOption(value.paingQueryData.datas);
           this.pageOption = {nowpage: value.paingQueryData.currentPage, row: value.paingQueryData.pageSize, total: value.paingQueryData.totalRecord};
-        });
+        }else {
+          this.toolSrv.setToast('error', '查询失败', value.message);
+        }
       }
     );
   }
@@ -98,7 +106,7 @@ export class VideoComponent implements OnInit {
           console.log(value);
           if (value.status === 1000) {
             value.data.forEach( v => {
-              this.videoGroupOption.push({label: v.groupName, value: v.groupId})
+              this.videoGroupOption.push({label: v.groupName, value: v.groupId});
             });
           }
         }
@@ -115,8 +123,7 @@ export class VideoComponent implements OnInit {
   //   );
   // }
   public  showAddDialog(): void {
-    this.queryVideoConfig();
-    this.getVideoGroupInfo();
+
     this.dialogOption = {
       type: 'add',
       title: '添加信息',
@@ -187,6 +194,8 @@ export class VideoComponent implements OnInit {
           } else {
             this.form.push({key: val, disabled: false, required: false, value: this.videoSelect[0].serviceAreaName});
           }
+        } else if (val ===  'orientation') {
+          this.form.push({key: val, disabled: false, required: true, value: this.videoSelect[0].orientation === '上行' ? 2 : 3});
         } else {
           this.form.push({key: val, disabled: false, required: false, value: this.videoSelect[0][val]});
         }
@@ -270,7 +279,47 @@ export class VideoComponent implements OnInit {
       value => {
         console.log(value);
         this.toolSrv.setQuestJudgment(value.status, value.message, () => {
+          console.log(value.companyComboBoxTreeList);
+          value.companyComboBoxTreeList.forEach( v => {
+             if (v.companyMngPrvcTreeList) {
+               v.companyMngPrvcTreeList.forEach( val => {
+                 if (val.companyAreaInfoList) {
+                   // console.log(val);
+                   val.companyAreaInfoList.forEach(vdata => {
+                     // console.log(vdata);
+                     if (vdata.serviceAreaBasisInfoList) {
+                       vdata.serviceAreaBasisInfoList.forEach( vh => {
+                        const down = vh.downStoreList;
+                        const nodownUp  = vh.sysStoreList;
+                        const up = vh.upstreamStoreList;
+                        vh.children = [
+                          {
+                           id: 2,
+                           label: '上行',
+                           children: up
+                         },
+                          {
+                             id: 2,
+                             label: '下行',
+                             children: down
+                           },
+                          {
+                             id: 0,
+                             label: '其他',
+                             children: nodownUp
+                           }];
+                        delete vh.downStoreList;
+                        delete vh.upstreamStoreList;
+                        delete vh.sysStoreList;
+                       });
+                     }
+                   });
+                 }
+               });
+             }
+          });
           this.companyTree =  value.companyComboBoxTreeList;
+
         });
       }
     );
@@ -309,7 +358,7 @@ export class VideoComponent implements OnInit {
             if (eKey === 'storeId') {
               if (e.value.value[eKey] === '') {
                 this.modifyvideo[eKey] = 0;
-              }else {
+              } else {
                 this.modifyvideo[eKey] = e.value.value[eKey];
               }
             } else  if (eKey !== 'name') {

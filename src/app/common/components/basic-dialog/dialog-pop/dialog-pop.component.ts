@@ -78,6 +78,7 @@ export class DialogPopComponent implements OnInit, OnChanges {
   }
   // The life cycle onChanges
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.treeData);
     // if (this.treeData) {
     //   this.disable = true;
     // }
@@ -121,10 +122,15 @@ export class DialogPopComponent implements OnInit, OnChanges {
         childnode.label = data[i].serviceAreaName;
         childnode.id = 3;
         childnode.selectable = true;
-      } else if (data[i].hasOwnProperty('storeName')) {
+      } else if (data[i].hasOwnProperty('label')) {
+        childnode.value = data[i].id;
+        childnode.label = data[i].label;
+        childnode.id = 4;
+        childnode.selectable = false;
+      } else if (data[i].hasOwnProperty('storeId')) {
         childnode.value = data[i].storeId;
         childnode.label = data[i].storeName;
-        childnode.id = 4;
+        childnode.id = 5;
         childnode.selectable = true;
       }
       if (data[i].hasOwnProperty('companyMngPrvcTreeList')) {
@@ -139,11 +145,18 @@ export class DialogPopComponent implements OnInit, OnChanges {
         if (data[i].serviceAreaBasisInfoList != null && data[i].serviceAreaBasisInfoList.length !== 0 ) {
           childnode.children = this.initializeTree(data[i].serviceAreaBasisInfoList);
         }
-      } else if(data[i].hasOwnProperty('sysStoreList')){
-        if (data[i].sysStoreList != null && data[i].sysStoreList.length !== 0 ) {
-          childnode.children = this.initializeTree(data[i].sysStoreList);
+      } else if (data[i].hasOwnProperty('children')) {
+        console.log(123);
+        if (data[i].children != null && data[i].children.length !== 0 ) {
+          childnode.children = this.initializeTree(data[i].children);
         }
-      } else {
+        // if (data[i].sysStoreList != null && data[i].sysStoreList.length !== 0 ) {
+        //   childnode.children = this.initializeTree(data[i].sysStoreList);
+        // }
+        // if (data[i].upstreamStoreList != null && data[i].upstreamStoreList.length !== 0 ) {
+        //   childnode.children = this.initializeTree(data[i].upstreamStoreList);
+        // }
+      }  else {
         childnode.children = [];
       }
       oneChild.push(childnode);

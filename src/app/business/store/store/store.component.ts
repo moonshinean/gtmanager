@@ -28,8 +28,10 @@ export class StoreComponent implements OnInit {
   public addStore: AddStore = new AddStore();
   public modifyStore: ModifyStore = new ModifyStore();
   public storeTypeOption = [];
-  public companyTree: any;
+  public companyTree = [];
+  public searchCompanyTree = [];
   public pageNo = 1;
+  public serviceId = 0;
   constructor(
     private storeSrv: StoreService,
     private toolSrv: PublicMethedService
@@ -41,9 +43,13 @@ export class StoreComponent implements OnInit {
       {label: '修改', style: {background: '#3A78DA', marginLeft: '1vw'} },
       {label: '删除', style: {background: '#A84847', marginLeft: '1vw'} },
     ];
+    this.btnOption.searchHidden = true;
     this.querystoreData(this.pageNo);
     this.getstoreConfigInfo();
     this.getStoreTypeInfo();
+    this.searchCompanyTree.push(
+      {companyId: 0, companyMngPrvcTreeList: [], companyName: '全部', level: 1 }
+    );
   }
   // select data （选择数据）
   public  selectData(e): void {
@@ -57,6 +63,7 @@ export class StoreComponent implements OnInit {
         {field: 'storeName', header: '店铺名称'},
         {field: 'storeTypeName', header: '店铺类型'},
         {field: 'serviceAreaName', header: '服务区名称'},
+        {field: 'orientation', header: '服务区方向'},
         {field: 'manage', header: '管理人'},
         {field: 'manageTelephone', header: '管理人电话'},
       ],
@@ -69,10 +76,16 @@ export class StoreComponent implements OnInit {
     this.storeSrv.queryStoreDataPage({currentPage: data, pageSize: 10, companyId: environment.companyId}).subscribe(
       value => {
         this.storeSelect = [];
-        this.toolSrv.setQuestJudgment(value.status, value.message, () => {
-          this.setTableOption(value.paingQueryData.datas);
-          this.pageOption = {nowpage: value.paingQueryData.currentPage, row: value.paingQueryData.pageSize, total: value.paingQueryData.totalRecord};
-        });
+        console.log(value);
+       if (value.status === 1000) {
+         value.paingQueryData.datas.forEach( v => {
+           v.orientation = (v.orientation === 2) ? '上行' : '下行';
+         });
+         this.setTableOption(value.paingQueryData.datas);
+         this.pageOption = {nowpage: value.paingQueryData.currentPage, row: value.paingQueryData.pageSize, total: value.paingQueryData.totalRecord};
+       } else {
+         this.toolSrv.setToast('error', '查询失败', value.message);
+       }
       }
     );
   }
@@ -147,6 +160,8 @@ export class StoreComponent implements OnInit {
         list.forEach(val => {
           if (val ===  'name') {
             this.form.push({key: val, disabled: false, required: true, value: this.storeSelect[0].serviceAreaName});
+          } else if (val ===  'orientation'){
+            this.form.push({key: val, disabled: false, required: true, value: this.storeSelect[0].orientation === '上行' ? 2 : 3});
           } else {
             this.form.push({key: val, disabled: false, required: true, value: this.storeSelect[0][val]});
           }
@@ -193,7 +208,11 @@ export class StoreComponent implements OnInit {
   // Pagination (分页)
   public  nowPageClick(e): void {
     this.pageNo = e;
-    this.querystoreData(this.pageNo );
+    if (this.serviceId === 0) {
+      this.querystoreData(this.pageNo );
+    } else {
+      this.queryStorePageByServiecId(this.pageNo, this.serviceId);
+    }
   }
   // delete storeInfo (删除卡扣)
   public  deletestore(): void {
@@ -220,6 +239,11 @@ export class StoreComponent implements OnInit {
         console.log(value);
         this.toolSrv.setQuestJudgment(value.status, value.message, () => {
             this.companyTree =  value.companyComboBoxTreeList;
+            value.companyComboBoxTreeList.forEach( v => {
+              this.searchCompanyTree.push(v);
+            });
+            console.log(this.searchCompanyTree);
+            console.log(this.companyTree );
         });
       }
     );
@@ -258,5 +282,34 @@ export class StoreComponent implements OnInit {
         this.toolSrv.setToast('error', '操作错误', '信息未填完整');
       }
     }
+  }
+
+
+  public  searchEvent(e): void {
+      console.log(e);
+      this.serviceId = e;
+      if (e !== 0) {
+        this.pageNo = 1;
+        this.queryStorePageByServiecId(this.pageNo, e);
+      } else {
+        this.pageNo = 1;
+        this.querystoreData(this.pageNo);
+      }
+  }
+
+  public  queryStorePageByServiecId(data, id): void {
+      this.storeSrv.queryStoreDataPageByServiceId({currentPage: data, pageSize: 10, serviceAreaId: id}).subscribe(
+        value => {
+          if (value.status === 1000) {
+            value.paingQueryData.datas.forEach( v => {
+              v.orientation = (v.orientation === 2) ? '上行' : '下行';
+            });
+            this.setTableOption(value.paingQueryData.datas);
+            this.pageOption = {nowpage: value.paingQueryData.currentPage, row: value.paingQueryData.pageSize, total: value.paingQueryData.totalRecord};
+          } else {
+            this.toolSrv.setToast('error', '查询失败', value.message);
+          }
+        }
+      );
   }
 }

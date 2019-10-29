@@ -9,9 +9,6 @@
     border-radius: 5px;
     cursor:pointer;
   }
-  .basic-btn-header-basic-btn{
-    //margin-left: 2vw;
-  }
   //.basic-btn-header-basic-btn-modify{
   //  margin-left: 1vw;
   //  background: #3A78DA;
@@ -38,8 +35,9 @@
   ////}
   .basic-btn-header-search{
     position: absolute;
-    margin-top: 5.3vh;
-    right: 6vw;
+    margin-top: 6.6vh;
+    margin-left: 19vw;
+    //right: 6vw;
     .basic-btn-header-btn-search{
       outline: none;
       border:0;
@@ -53,5 +51,32 @@
     .basic-btn-header-btn-search:hover{
       background: #4B5062;
     }
+  }
+  ::ng-deep .ui-dialog-titlebar{
+    font-size: 1rem;
+    text-align: center;
+  }
+  ::ng-deep .ui-dialog .ui-widget-content{
+    background: #DCDCDC;
+  }
+  ::ng-deep .ui-dialog-titlebar{
+    font-size: 1.7rem;
+    padding: 0.5rem;
+  }
+  .dialog-pop-btn-sure {
+    background: #55AB7F
+  }
+  .dialog-pop-btn-false {
+    background: #9E9E9E;
+  }
+  .dialog-pop-btn{
+    width: 6vw;
+    //text-align: center;
+    border-radius: 5px;
+    height: 4vh;
+    outline: none;
+    color: #fff;
+    border: 0;
+    margin-left: 2vw;
   }
 }

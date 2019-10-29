@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BasicBtnComponent } from './basic-btn/basic-btn.component';
-import {DropdownModule} from 'primeng/primeng';
+import {DialogModule, DropdownModule, InputTextModule, ScrollPanelModule, TreeModule} from 'primeng/primeng';
 import {FormsModule} from '@angular/forms';
 
 
@@ -11,7 +11,11 @@ import {FormsModule} from '@angular/forms';
   imports: [
     CommonModule,
     DropdownModule,
-    FormsModule
+    FormsModule,
+    TreeModule,
+    ScrollPanelModule,
+    DialogModule,
+    InputTextModule,
   ],
   exports: [BasicBtnComponent]
 })
